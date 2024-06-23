@@ -1,64 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './Homepage.css'
+import './Movies.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlayCircle, faStairs, faStar } from '@fortawesome/free-solid-svg-icons'
-import { getActionMovies, getAnimeMovies, getComedyMovies, getDramaMovies } from '../../api/MovieApi'
-import { useNavigate } from 'react-router-dom'
+import { faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { getMost5MoviesByGenreName, getMoviesByGenreName } from '../../api/MovieApi'
 
-const Homepage = ({top5Movies,top10Movies}) => {
+const Movies = () => {
     const [active, setActive] = useState(0)
-    const [lengthItems, setLengthItems] = useState(top5Movies?.length - 1)
+    const [lengthItems, setLengthItems] = useState()
     const intervalRef = useRef(null);
-    const [animeMovies, setAnimeMovies] = useState()
-    const [actionMovies, setActionMovies] = useState()
-    const [comedyMovies, setComedyMovies] = useState()
-    const [dramaMovies, setDramaMovies] = useState()
 
     const [moviesArray,setMoviesArray] = useState([])
-    const [movieTitle,setMoviesTitle] = useState(['Popular on HMovie','Anime',"Action","Drama","Comedy"])
+    const location = useLocation();
+    const [genre,setGenre] = useState(location.pathname.slice(1))
+    const [movies,setMovies] = useState()
+    const [top5Movies, setTop5Movies] = useState()
 
     const navigate = useNavigate()
 
-    const handleScroll = () => {
-        const footer = document.getElementById('footer')
-        const div = document.getElementById('myDiv1')
-        let divHeight = div.clientHeight;
-        const position = window.scrollY;
-        if((divHeight-200) <= position){
-            footer.classList.add('show')
-        }
-        else {
-            footer.classList.remove('show')
-        }
-        
-      };
-      
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-      
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-    
-    
+
     const fetchMovie = async () => {
         try{
-            const animes = await getAnimeMovies();
-            const actions = await getActionMovies();
-            const comedies = await getComedyMovies();
-            const dramas = await getDramaMovies();
-            if(animes){
-                setAnimeMovies(animes.data)
+            const most5MoviesByGenre = await getMost5MoviesByGenreName(genre)
+            const moviesByGenre = await getMoviesByGenreName(genre) 
+
+            if(most5MoviesByGenre){
+                setTop5Movies(most5MoviesByGenre.data)
             }
-            if(actions){
-                setActionMovies(actions.data)
-            }
-            if(comedies){
-                setComedyMovies(comedies.data)
-            }
-            if(dramas){
-                setDramaMovies(dramas.data)
+
+            if(moviesByGenre){
+                setMovies(moviesByGenre.data)
             }
 
         }catch(err){
@@ -69,13 +40,6 @@ const Homepage = ({top5Movies,top10Movies}) => {
     useEffect(()=>{
         fetchMovie();
     },[])
-
-    useEffect(()=>{
-        if(top10Movies){
-            setMoviesArray([top10Movies,animeMovies,actionMovies,dramaMovies,comedyMovies])
-
-        }
-    },[top10Movies,animeMovies,actionMovies,comedyMovies,dramaMovies])
 
     useEffect(() => {
         setLengthItems(top5Movies?.length - 1);
@@ -117,19 +81,8 @@ const Homepage = ({top5Movies,top10Movies}) => {
         setActive(prevActive => (prevActive - 1 < 0 ? lengthItems : prevActive - 1));
     }
 
-    const handleNavigateMoviesGenre = (genre) => {
-        if(genre != "Popular on HMovie"){
-           let pathName = genre.charAt(0).toLowerCase() + genre.slice(1)
-           navigate(pathName);
-        }
-    }
-
-    const handleNavigate = (path) => {
-        navigate(path)
-    } 
-
-  return (  
-    <div className='homepage-container'>      
+  return ( 
+    <div className='movies-container'>      
         <div className="movie-slider">
            <div className='movie-slider-list'>
             {top5Movies?.map((movie,index) => {
@@ -160,18 +113,19 @@ const Homepage = ({top5Movies,top10Movies}) => {
 
           
 
-        </div> 
-            <div className='movie-slider-details'>
-                <div className='movie-slider-title' onClick={()=> handleNavigate(`/album/${top5Movies[active].slug}`)}>{top5Movies ? top5Movies[active].title : ''}</div>
+        </div>
+
+        <div className='movie-slider-details'>
+                <div className='movie-slider-title' onClick={() => navigate(`/album/${top5Movies[active]?.slug}`)}>{top5Movies ? top5Movies[active]?.title : ''}</div>
                 <div className='extra-details'>
                     <div className='movie-slider-rate'>
                         <FontAwesomeIcon className='star-icon' icon={faStar}></FontAwesomeIcon>
-                        {top5Movies ? top5Movies[active].rating : ''}</div>
-                    <div className='movie-slider-date'>{top5Movies ? top5Movies[active].releaseDate : ''}</div>
-                    <div className='movie-slider-duration'>{top5Movies ? top5Movies[active].duration : ''}m</div>
+                        {top5Movies ? top5Movies[active]?.rating : ''}</div>
+                    <div className='movie-slider-date'>{top5Movies ? top5Movies[active]?.releaseDate : ''}</div>
+                    <div className='movie-slider-duration'>{top5Movies ? top5Movies[active]?.duration : ''}m</div>
                 </div>
                 <div className='movie-slider-genres'>
-                    {top5Movies && top5Movies[active].genres.map((item,index) => { 
+                    {top5Movies && top5Movies[active]?.genres?.map((item,index) => { 
                         return (
                             <div key={index+"genreSlider"} className='item'>{item}</div>
                         )
@@ -179,10 +133,10 @@ const Homepage = ({top5Movies,top10Movies}) => {
                     
                 </div>
                 <div className='movie-slider-des'>
-                {top5Movies ? top5Movies[active].description : ''}
+                {top5Movies ? top5Movies[active]?.description : ''}
                 </div>
                 <div className='movie-slider-button'>
-                    <div className='movie-slider-playbutton' onClick={()=> handleNavigate(`/play/${top5Movies[active].episodes[0].slug}`)}>
+                    <div className='movie-slider-playbutton'>
                         <FontAwesomeIcon size='3x' icon={faPlayCircle}></FontAwesomeIcon>
                     </div>
 
@@ -196,34 +150,32 @@ const Homepage = ({top5Movies,top10Movies}) => {
                     </div>
                 </div>
                 
-            </div>
-        <div className='movie-polular-list-container' id='myDiv1'>
-            {moviesArray && moviesArray?.map((movies,index) => {
-                return(
-                <>
-                    <h2 onClick={() => handleNavigateMoviesGenre(movieTitle[index])} className='movie-polular-title'>{movieTitle[index]}</h2>
+        </div>
+
+        <div className='movie-polular-list-container' id='myDiv2'>
+                    <h2 className='movie-polular-title'>{genre?.charAt(0).toUpperCase() + genre?.slice(1)}</h2>
                     <div className='movie-polular-list'>
-                        {movies && movies?.map((movie,index) => {
+                        {movies && movies?.map((movie) => {
                             return(
-                                <div className='movie-polular-item'>            
+                        <div key={`moviesgenre${movie.imdbId}`} className='movie-polular-item'>            
                             <div className='movie-polular-item-image'>
-                            <img src={movie.postUrl}>
+                            <img src={movie?.postUrl}>
                                 
                             </img>
                             <div className='movie-polular-item-rate'>
                                     <FontAwesomeIcon className='icon' size='2xs' icon={faStar}></FontAwesomeIcon>
-                                    {movie.rating}
+                                    {movie?.rating}
                                 </div>
                             </div>           
                                                             
-                            <div className='movie-polular-item-title'>{movie.title}</div>   
+                            <div className='movie-polular-item-title'>{movie?.title}</div>   
                             
                             <div className='movie-polular-item-detail'>
                             <div className='details-image-container'>
-                                <img src={movie.backDropUrl}></img>
+                                <img src={movie?.backDropUrl}></img>
                             </div>
                             <div className='details-info'>
-                                <div className='details-info-title' onClick={()=> handleNavigate(`/album/${movie.slug}`)}>{movie.title}</div>
+                                <div className='details-info-title' onClick={() => {navigate(`/album/${movie.slug}`);console.log(movie.slug)}}>{movie.title}</div>
                                 <div className='extra-details-info'>
                                     <div className='rate'>
                                         <FontAwesomeIcon size='xs' icon={faStar}></FontAwesomeIcon>
@@ -233,13 +185,13 @@ const Homepage = ({top5Movies,top10Movies}) => {
                                     <div className='duration'>{movie.duration}</div>
                                 </div>
                                 <div className='details-info-genres'>
-                                    {movie?.genres && movie?.genres.map((genre) => {
+                                    {movie?.genres && movie?.genres?.map((genre) => {
                                         return(
                                             <div className='item'>{genre}</div>
                                         )
                                     })}
                                 </div>
-                                <div className='details-info-des'>{movie.description}</div>
+                                <div className='details-info-des'>{movie?.description}</div>
                                 <div className='more-info'>more info <b>&gt;</b></div>
                             </div>
                             </div>   
@@ -248,13 +200,11 @@ const Homepage = ({top5Movies,top10Movies}) => {
                         })}
                     
                     </div>     
-                </>
-                )
-            })}
+           
         </div>
          
-  </div>
+    </div>
   )
 }
 
-export default Homepage
+export default Movies

@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcaseClock, faClock, faClockFour, faClockRotateLeft, faFilm, faGlobe, faSearch, faUser, faUserAlt, faUserAltSlash, faUserCircle, faUserClock } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './Header.css'
 const Header = () => {
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
             let headerContainer = document.querySelector('.header-container');
             if (headerContainer) {
-                console.log(window.scrollY)
                 if (window.scrollY > 120) {
                     headerContainer.style.backgroundColor = "rgb(10, 12, 15)";
                 } else {
@@ -28,24 +28,24 @@ const Header = () => {
   return (
     <div className='header-container' >
         <div className='header-left-container'>
-            <div className='header-logo'>
+            <NavLink className='header-logo' to="/">
                 <div>
                     <FontAwesomeIcon style={{height:"30px"}} icon={faFilm}/>
                 </div>
                 
                 <span className='header-logo-title'>HMovie</span> 
-            </div>
+            </NavLink>
             <NavLink className='header-home' to="/">Trang chủ</NavLink>
             <div className='header-genres'>
                 <span className='header-genres-title'>Thể loại</span>
                 <span className='arrow'></span>
                 <span className='arrow-green'></span>
                 <div className='box genre-box'>
-                    <div className='genre-box-item'>Drama</div>
-                    <div className='genre-box-item'>Action</div>
-                    <div className='genre-box-item'>Anime</div>
-                    <div className='genre-box-item'>Comedy</div>
-                    <div className='genre-box-item'>Romance</div>
+                    <a href='/drama' className='genre-box-item'>Drama</a>
+                    <a href='/action' className='genre-box-item' >Action</a>
+                    <a href='/anime' className='genre-box-item'>Anime</a>
+                    <a href='/comedy' className='genre-box-item'>Comedy</a>
+                    <a href='/romance' className='genre-box-item'>Romance</a>
                 </div>
             </div>
         </div>

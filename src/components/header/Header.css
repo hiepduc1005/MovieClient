@@ -9,9 +9,13 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 0 64px;
-    z-index: 1;
+    z-index: 9999;
     background-color: transparent;
     transition: 1s;
+    margin-bottom: 60px;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .header-left-container{
@@ -22,6 +26,8 @@
 }
 
 .header-logo{
+    color: rgb(255, 255, 255,0.6);
+    text-decoration: none;
     width: 100px;
     font-weight: 600;
     display: flex;
@@ -90,6 +96,7 @@
     cursor: pointer;
     width: 180px;
     height: 44px;
+    text-decoration: none;
 }
 
 .genre-box-item:hover{
@@ -98,7 +105,8 @@
 }
 
 .header-genres:hover > .box.genre-box{
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .genre-box::after{
