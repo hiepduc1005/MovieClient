@@ -103,6 +103,7 @@
 }
 
 .movie-slider-title{
+    height: 56px;
     font-size: 30px;
     font-weight: bold;
     color: var(--primary-color);
@@ -208,10 +209,23 @@
 .movie-slider-playbutton:hover{
     cursor: pointer;
     color: rgb(28, 199, 73,0.8);
+
 }
 
 .movie-slider-watchlater{
     cursor: pointer;
+    width: 48px;
+    height: 48px;
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.movie-slider-watchlater .watchlater-icon{
+    color: #000;
 }
 
 .movie-slider-watchlater:hover  svg circle {

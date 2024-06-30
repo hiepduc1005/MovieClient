@@ -223,6 +223,12 @@
     right: 50px;
 }
 
+.header-account img{
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 
 .header-account,
 .header-language,
@@ -262,43 +268,95 @@
 
 .history-box{
     top: 60px;
-
+   
 }
 
 .history-box-item{
-    width: 250px;
-    height: 160px;
-    padding: 34px;
-    font-size: 12px;
-    color: #fff;
-}
-
-.history-box-item-title{
-    
-    opacity: 0.6;
-}
-
-.history-box-item-button{
-    width: 100%;
-}
-.history-box-item-button button{
-    color: #fff;
-    text-align: center;
-    border: none;
-    background-color: var(--primary-color);
-    width: 90px;
-    height: 28px;
+    background: rgb(26, 28, 34);
     border-radius: 4px;
-    margin-top: 20px;
+    width: 280px;
+    height: 78px;
+    display: flex;
+    cursor: pointer;
+    padding: 8px 16px;
 }
 
-.history-box-item-button button:hover{
-    background-color: var(--primary-color);
-    opacity: 0.8;
+.history-box-item:hover{
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.history-box-item:hover .info-container .title{
+    color: var(--primary-color);
+} 
+
+.history-box-item .img-container{
+    width: 110px;
+}
+
+.history-box-item .info-container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 4px 0px 4px 8px;
+}
+
+.history-box-item .info-container .title{
+    font-size: 14px;
+    color: rgb(169, 169, 172);
+    letter-spacing: 0px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.history-box-item .info-container .episode-number{
+    font-size: 12px;
+    color: rgb(130, 131, 135);
+    letter-spacing: 0px;
+    line-height: 18px;
+}
+
+
+
+.history-box-item img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.history-box-footer {
+    height: 32px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(130, 131, 135);
+    font-size: 14px;
+    letter-spacing: 0;
     cursor: pointer;
 }
 
-.history-box::after{
+.history-box-footer:hover{
+    color: var(--primary-color);
+}
+
+.history-box-footer-unauth{
+    font-size: 14px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(130, 131, 135);
+    letter-spacing: 0;
+}
+
+
+
+.history-box .history-box::after{
     display: block;
     box-sizing: border-box;
     content: "";
@@ -312,6 +370,11 @@
     border-left: 1px solid rgba(255, 255, 255, 0.25);
     border-top: 1px solid rgba(255, 255, 255, 0.25);
      border-radius: 4px 0px 0px;
+}
+
+.more-icon{
+    margin-left: 6px;
+    margin-top: 2px;
 }
 
 .header-history:hover > .box.history-box{
@@ -366,6 +429,7 @@
 /*  */
 
 .account-box{
+    width: 250px;
     top: 100%;
     right: -100%;
 }
@@ -387,7 +451,6 @@
 }
 
 .account-box-item{
-    width: 250px;
     padding: 34px;
     font-size: 12px;
     color: #fff;
@@ -424,3 +487,65 @@
 .header-account:hover >.account-box{
     display: block;
 }
+/* account box authenticated */
+.account-box-header{
+    cursor: pointer;
+    opacity: 0.8;
+    align-items: center;
+    display: flex;
+    padding: 8px 0px 16px 16px;
+}
+
+.account-box-header:hover{
+    background-color: #3d3d3d;
+    opacity: 1;
+}
+
+.account-box-header .img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 16px;
+}
+
+.account-box-header img{
+    width: 48px;
+}
+
+.account-box-header .username{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.account-box-item-auth .item-right{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.account-box-item-auth{
+    color:rgb(169, 169, 172) ;
+    cursor: pointer;
+    padding-left: 16px;
+    line-height: 44px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.account-box-item-auth:hover{
+    color: #fff;
+    background-color: #3d3d3d;
+}
+
+.account-box-item-auth:hover .icon-container,
+.account-box-item-auth:hover > .item-left{
+    color: var(--primary-color);
+}
+
+.account-box-item-auth svg{
+    margin-right: 12px;
+}
+

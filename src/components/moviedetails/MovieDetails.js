@@ -4,23 +4,61 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faFlag, faPlay, faShare, faShareAlt, faShareAltSquare, faShareFromSquare, faTasks } from '@fortawesome/free-solid-svg-icons'
 import { getMovieBySlug } from '../../api/MovieApi'
 import { useLocation, useNavigate, useParams } from 'react-router'
+import { addMovieToWatchList, checkMovieInWatchList } from '../../api/WatchListApi'
 
-const MovieDetails = () => {
-
+const MovieDetails = ({user,token}) => {
   const [isCollapse,setIsCollapse] = useState(false)
   const [isEpisodeTapSelected,setIsEpisodeTapSelected] = useState(true)
   const [isTrailerTapSelected,setIsTrailerTapSelected] = useState(false)
   const [needCollapse,setNeedCollapse] = useState(false)
-
+  const [isInWatchList,setIsInWatchList] = useState(false)
   const [movie,setMovie] = useState()
   const navigate = useNavigate()
-
+  const [show,setShow] = useState(false)
   const location = useLocation()
 
   const descriptionRef = useRef(null)
   const descriptionContainerRef = useRef(null)
 
   useEffect(() => {
+    if (show) {
+      const timer = setTimeout(() => {
+        setShow(false)
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  },[show])
+
+  const handelAddMovieToWatchLater = async (watchlistId,movieId) => {
+    try{
+      const data = await addMovieToWatchList(watchlistId,movieId,token);
+
+      const check =  handleCheckMovieInWatchList(user?.watchList?.id,movie?.id)
+      if(check && data){
+        setShow(true)
+      }
+
+    }catch(err){
+        console.log(err)
+    }
+ }  
+
+  const handleCheckMovieInWatchList = async (watchlistId,movieId) => {
+    try{
+        const data = await checkMovieInWatchList(watchlistId,movieId,token);
+        if(data){
+          setIsInWatchList(data.data)
+          return data;
+        }
+    }catch(err){
+        console.log(err)
+    }
+  }  
+
+  useEffect(() => {
+    if(movie && user){
+      handleCheckMovieInWatchList(user?.watchList?.id,movie?.id)
+    }
     const desHeight = descriptionRef.current.offsetHeight
     const desContainerHeight = descriptionContainerRef.current.offsetHeight
     if(desHeight > desContainerHeight){
@@ -105,26 +143,16 @@ const MovieDetails = () => {
             <FontAwesomeIcon size='xl' icon={faShareFromSquare}></FontAwesomeIcon>
               <span>Share</span>
             </div>
-            <div className='btn btn-watchlater'>
-            <svg
-      width="24px"
-      height="24px"
-      viewBox="0 0 24 24"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
-      <g id="icon/Add" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <rect x="0" y="0" width="24" height="24" />
-        <path
-          d="M11.5,3 C11.7761424,3 12,3.22385763 12,3.5 L12,4.5 C12,4.77614237 11.7761424,5 11.5,5 L7,5 L7,18.864 L11.0397234,15.4985222 C11.5562588,15.068076 12.2898613,15.0373299 12.8374063,15.4062837 L12.9602766,15.4985222 L17,18.865 L17,14.5 C17,14.2238576 17.2238576,14 17.5,14 L18.5,14 C18.7761424,14 19,14.2238576 19,14.5 L19,19.9324792 C19,20.760901 18.3284325,21.4325168 17.5,21.4325168 C17.1992161,21.4325168 16.9066001,21.3420927 16.6593788,21.1748017 L16.5397234,21.0848111 L12,17.301 L7.4602766,21.0848111 C6.86363721,21.5820106 5.99503637,21.5375119 5.45180014,21.0056172 L5.34766808,20.8927558 C5.15511629,20.6616936 5.03722367,20.3790363 5.0074697,20.0820147 L5,19.9324792 L5,5 C5,3.9456382 5.81587779,3.08183488 6.85073766,3.00548574 L7,3 L11.5,3 Z M18.5,3 C18.7761424,3 19,3.22385763 19,3.5 L18.999,6 L21.5,6 C21.7761424,6 22,6.22385763 22,6.5 L22,7.5 C22,7.77614237 21.7761424,8 21.5,8 L18.999,8 L19,10.5 C19,10.7761424 18.7761424,11 18.5,11 L17.5,11 C17.2238576,11 17,10.7761424 17,10.5 L16.999,8 L14.5,8 C14.2238576,8 14,7.77614237 14,7.5 L14,6.5 C14,6.22385763 14.2238576,6 14.5,6 L16.999,5.999 L17,3.5 C17,3.22385763 17.2238576,3 17.5,3 L18.5,3 Z"
-          id="形状结合"
-          fill="#FFFFFF"
-          fillRule="nonzero"
-        />
-      </g>
-    </svg>        
-    <span>Watch Later</span>
+            <div className='btn btn-watchlater' onClick={() => handelAddMovieToWatchLater(user?.watchList?.id,movie?.id)}>
+            {isInWatchList ? 
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24"><path fill="currentColor" d="m10.95 14l4.95-4.95l-1.425-1.4l-3.525 3.525L9.525 9.75L8.1 11.175zM5 21V5q0-.825.588-1.412T7 3h10q.825 0 1.413.588T19 5v16l-7-3zm2-3.05l5-2.15l5 2.15V5H7zM7 5h10z"/></svg>  
+              
+              :
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18V5H7v13l5-2.18zm0-15a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 4h2v2h2v2h-2v2h-2v-2H9V9h2z"/></svg>       
+            }
+            <span>Watch Later</span>
             </div>
           </div>
         </div>
@@ -168,6 +196,9 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+          <div className={`notification ${show ? 'show-block' : ''}`}>
+            {isInWatchList ? "Added to Watch Later" : "Remove from Watch Later"}
+          </div>
     </div>
   )
 }

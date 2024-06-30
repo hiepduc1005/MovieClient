@@ -342,3 +342,21 @@ b{
 .showTrailerTap{
     display: flex;
 }
+
+
+/* notification */
+.notification{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    white-space: nowrap;
+    z-index: 999;
+    background: rgb(35, 37, 43);
+    padding: 20px 30px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}

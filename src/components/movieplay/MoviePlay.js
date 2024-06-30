@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { getMovieEpisodeBySlug } from '../../api/MovieApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleRight, faAngleUp, faCommentAlt, faShareFromSquare,faStar,} from '@fortawesome/free-solid-svg-icons'
+import { addMovieToHistory } from '../../api/WatchHistoriesApi'
 
-const MoviePlay = ({top10Movies}) => {
+const MoviePlay = ({top10Movies,token,user}) => {
   const location = useLocation();
   const pathname = location.pathname.slice(6)
   
@@ -18,6 +19,7 @@ const MoviePlay = ({top10Movies}) => {
   const desContainerRef = useRef(null)
   const navigate = useNavigate()
 
+
   const fetchEpisodeBySlug = async (slug) => {
     try{
       const episodeData = await getMovieEpisodeBySlug(slug);
@@ -29,6 +31,58 @@ const MoviePlay = ({top10Movies}) => {
     }
     
   }
+
+  const addMovieToWatchHistory = async (userId,movieId,episodeNumber,accesstoken) => {
+    try{
+      const data = await addMovieToHistory(userId,movieId,episodeNumber,accesstoken)
+    }catch(err){
+      console.log(err)
+    }
+
+  }
+
+  const addMovieHistoryUnauthenticatedUser = (movieId,movieTitle,episodeNumber,backDropUrl,slug) => {
+    const currentHistoryJSON = localStorage.getItem("watchHistory");
+    const currentHistory = currentHistoryJSON ? JSON.parse(currentHistoryJSON) : [];
+
+    const movieIndex = currentHistory.findIndex(movie => movieId === movie.movieId)
+    if(movieIndex === -1){
+      const data = {
+          movieId:movieId,
+          movieTitle:movieTitle,
+          episodeNumber:episodeNumber,
+          backDropUrl:backDropUrl,
+          slug:slug
+      }
+      
+      if(currentHistory.length === 4){
+         currentHistory.shift();
+      }
+
+      currentHistory.push(data)
+
+    }
+    else{
+      currentHistory[movieIndex].episodeNumber = episodeNumber
+    }
+    
+    localStorage.setItem("watchHistory",JSON.stringify(currentHistory))
+
+  }
+  
+  useEffect(() => {
+    if(user && episode){
+      addMovieToWatchHistory(user?.id,episode?.movie?.id,episode?.episode?.episodeNumber,token)
+    }else if (!user && episode) {
+      addMovieHistoryUnauthenticatedUser(
+          episode?.movie?.id,
+          episode?.movie?.title,
+          episode?.episode?.episodeNumber,
+          episode?.movie?.backDropUrl,
+          episode?.episode?.slug
+          )
+    }
+  },[episode])
   
   useEffect(() => {
     const desHeight = descriptionRef.current.offsetHeight
@@ -61,6 +115,7 @@ const MoviePlay = ({top10Movies}) => {
       <div className='movieplay-top'>
         <div className='movieplay-left'>
         <iframe 
+            id='iframe'
             class="iframe"
             src={episode?.episode?.episodeUrl}
             allowFullScreen="true" 

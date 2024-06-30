@@ -36,7 +36,9 @@ body{
   background: rgb(55, 56, 61);
 }
 
-
+p{
+  margin: 0;
+}
 
 html{
   height: 100%;

@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle, faStairs, faStar } from '@fortawesome/free-solid-svg-icons'
 import { getActionMovies, getAnimeMovies, getComedyMovies, getDramaMovies } from '../../api/MovieApi'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { addMovieToWatchList, checkMovieInWatchList } from '../../api/WatchListApi'
 
-const Homepage = ({top5Movies,top10Movies}) => {
+const Homepage = ({top5Movies,top10Movies,user,token}) => {
     const [active, setActive] = useState(0)
     const [lengthItems, setLengthItems] = useState(top5Movies?.length - 1)
     const intervalRef = useRef(null);
@@ -13,11 +15,47 @@ const Homepage = ({top5Movies,top10Movies}) => {
     const [actionMovies, setActionMovies] = useState()
     const [comedyMovies, setComedyMovies] = useState()
     const [dramaMovies, setDramaMovies] = useState()
-
     const [moviesArray,setMoviesArray] = useState([])
     const [movieTitle,setMoviesTitle] = useState(['Popular on HMovie','Anime',"Action","Drama","Comedy"])
-
     const navigate = useNavigate()
+
+    const [show,setShow] = useState(false)
+    const [isInWatchList,setIsInWatchList] = useState()
+
+    useEffect(() => {
+        if (show) {
+          const timer = setTimeout(() => {
+            setShow(false)
+          }, 3000);
+          return () => clearTimeout(timer);
+        }
+      },[show])
+    
+      const handelAddMovieToWatchLater = async (watchlistId,movieId) => {
+        try{
+          const data = await addMovieToWatchList(watchlistId,movieId,token);
+    
+          const check =  handleCheckMovieInWatchList(watchlistId,movieId)
+          if(check && data){
+            setShow(true)
+          }
+    
+        }catch(err){
+            console.log(err)
+        }
+     }  
+    
+      const handleCheckMovieInWatchList = async (watchlistId,movieId) => {
+        try{
+            const data = await checkMovieInWatchList(watchlistId,movieId,token);
+            if(data){
+              setIsInWatchList(data.data)
+              return data;
+            }
+        }catch(err){
+            console.log(err)
+        }
+      }  
 
     const handleScroll = () => {
         const footer = document.getElementById('footer')
@@ -39,8 +77,7 @@ const Homepage = ({top5Movies,top10Movies}) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
-    
+    }, []);  
     
     const fetchMovie = async () => {
         try{
@@ -68,6 +105,11 @@ const Homepage = ({top5Movies,top10Movies}) => {
 
     useEffect(()=>{
         fetchMovie();
+
+        // top5Movies.array.forEach(movie => {
+
+        // });
+
     },[])
 
     useEffect(()=>{
@@ -95,9 +137,11 @@ const Homepage = ({top5Movies,top10Movies}) => {
             let newActiveDot = document.querySelectorAll('.movie-slider-dot li')[active];
             if (newActiveDot) newActiveDot.classList.add('active');
         };
-
+        
         reFreshSlider();
-
+        if(top5Movies){
+            handleCheckMovieInWatchList(user?.watchList?.id,top5Movies[active].id)
+        }
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
@@ -111,10 +155,12 @@ const Homepage = ({top5Movies,top10Movies}) => {
 
     const handleNext = () => {
         setActive(prevActive => (prevActive + 1 > lengthItems ? 0 : prevActive + 1));
+       
     }
 
     const handlePrev = () => {
         setActive(prevActive => (prevActive - 1 < 0 ? lengthItems : prevActive - 1));
+      
     }
 
     const handleNavigateMoviesGenre = (genre) => {
@@ -186,13 +232,15 @@ const Homepage = ({top5Movies,top10Movies}) => {
                         <FontAwesomeIcon size='3x' icon={faPlayCircle}></FontAwesomeIcon>
                     </div>
 
-                    <div className='movie-slider-watchlater'>
-                        <svg width="48px" height="48px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Btn/Add/Normal" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                                <circle id="bg" fillOpacity="0.8" fill="#FFFFFF" cx="30" cy="30" r="30"></circle>
-                                    <path d="M29.3055556,17.25 C29.6890866,17.25 30,17.5609134 30,17.9444444 L30,19.3888889 C30,19.77242 29.6890866,20.0833333 29.3055556,20.0833333 L22.9166667,20.0833333 L22.9166667,39.724 L28.6396082,34.9562398 C29.3713667,34.346441 30.4106369,34.302884 31.1863257,34.8255686 L31.3603918,34.9562398 L37.0833333,39.7254167 L37.0833333,33.5277778 C37.0833333,33.1442467 37.3942467,32.8333333 37.7777778,32.8333333 L39.2222222,32.8333333 C39.6057533,32.8333333 39.9166667,33.1442467 39.9166667,33.5277778 L39.9166667,41.2376789 C39.9166667,42.4112764 38.9652794,43.3627321 37.7916667,43.3627321 C37.3655561,43.3627321 36.9510168,43.2346313 36.6007867,42.9976358 L36.4312748,42.8701491 L30,37.50975 L23.5687252,42.8701491 C22.7234861,43.574515 21.4929682,43.5114751 20.7233835,42.7579578 L20.5758631,42.5980707 C20.3030814,42.2707327 20.1360669,41.8703014 20.0939154,41.4495208 L20.0833333,41.2376789 L20.0833333,20.0833333 C20.0833333,18.5896541 21.2391602,17.3659327 22.7052117,17.2577715 L22.9166667,17.25 L29.3055556,17.25 Z M39.2222222,17.25 C39.6057533,17.25 39.9166667,17.5609134 39.9166667,17.9444444 L39.9163333,21.499 L43.4722222,21.5 C43.8557533,21.5 44.1666667,21.8109134 44.1666667,22.1944444 L44.1666667,23.6388889 C44.1666667,24.02242 43.8557533,24.3333333 43.4722222,24.3333333 L39.9163333,24.333 L39.9166667,27.8888889 C39.9166667,28.27242 39.6057533,28.5833333 39.2222222,28.5833333 L37.7777778,28.5833333 C37.3942467,28.5833333 37.0833333,28.27242 37.0833333,27.8888889 L37.0823333,24.333 L33.5277778,24.3333333 C33.1442467,24.3333333 32.8333333,24.02242 32.8333333,23.6388889 L32.8333333,22.1944444 C32.8333333,21.8109134 33.1442467,21.5 33.5277778,21.5 L37.0823333,21.499 L37.0833333,17.9444444 C37.0833333,17.5609134 37.3942467,17.25 37.7777778,17.25 L39.2222222,17.25 Z" fill="#111319" fillRule="nonzero"></path>
-                            </g>
-                        </svg>
+                    <div className='movie-slider-watchlater' onClick={()=> handelAddMovieToWatchLater(user?.watchList?.id,top5Movies[active].id)}>
+                    {isInWatchList ? 
+
+                    <svg className='watchlater-icon' xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="currentColor" d="m10.95 14l4.95-4.95l-1.425-1.4l-3.525 3.525L9.525 9.75L8.1 11.175zM5 21V5q0-.825.588-1.412T7 3h10q.825 0 1.413.588T19 5v16l-7-3zm2-3.05l5-2.15l5 2.15V5H7zM7 5h10z"/></svg>  
+
+                    :
+
+                    <svg className='watchlater-icon' xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18V5H7v13l5-2.18zm0-15a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 4h2v2h2v2h-2v2h-2v-2H9V9h2z"/></svg>       
+                    }
                     </div>
                 </div>
                 
@@ -205,7 +253,7 @@ const Homepage = ({top5Movies,top10Movies}) => {
                     <div className='movie-polular-list'>
                         {movies && movies?.map((movie,index) => {
                             return(
-                                <div className='movie-polular-item'>            
+                        <div className='movie-polular-item' key={`movie-polular-item${movie?.imdbId}${index}`}>            
                             <div className='movie-polular-item-image'>
                             <img src={movie.postUrl}>
                                 
@@ -233,9 +281,9 @@ const Homepage = ({top5Movies,top10Movies}) => {
                                     <div className='duration'>{movie.duration}</div>
                                 </div>
                                 <div className='details-info-genres'>
-                                    {movie?.genres && movie?.genres.map((genre) => {
+                                    {movie?.genres && movie?.genres.map((genre,index) => {
                                         return(
-                                            <div className='item'>{genre}</div>
+                                            <div key={`details-info-genres${index}`} className='item'>{genre}</div>
                                         )
                                     })}
                                 </div>
@@ -252,7 +300,9 @@ const Homepage = ({top5Movies,top10Movies}) => {
                 )
             })}
         </div>
-         
+        <div className={`notification ${show ? 'show-block' : ''}`}>
+            {isInWatchList ? "Added to Watch Later" : "Remove from Watch Later"}
+        </div>
   </div>
   )
 }

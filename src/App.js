@@ -9,11 +9,34 @@ import Movies from './components/moviesgenre/Movies';
 import Footer from './components/footer/Footer';
 import MovieDetails from './components/moviedetails/MovieDetails';
 import MoviePlay from './components/movieplay/MoviePlay';
+import ModalAuth from './components/modal/ModalAuth';
+import Cookies from 'js-cookie';
+import { getAuthenticatedUser } from './api/UserApi';
+import AccountInfo from './components/account/AccountInfo';
 
 function App() {
   const [top5Movies, setTop5Movies] = useState();
   const [top10Movies, setTop10Movies] = useState();
-
+  const [user,setUser] = useState()
+  const token = Cookies.get("token")
+  
+  const fetchAuthenticatedUser= async (token) => {
+      try {
+          let userData = await getAuthenticatedUser(token);
+          if(userData) {
+              setUser(userData.data)
+          }
+      } catch (error) {
+          console.error("Error fetching authenticated user:", error);
+      }
+  };
+  
+  useEffect(() => {
+    if(token){
+      fetchAuthenticatedUser(token)
+    }  
+  }, [token]);
+ 
   const fetchTop5RatedMovie = async () => {
     try{
       const res = await get5TopRatedMovie();
@@ -48,14 +71,29 @@ function App() {
 
   return (
     <div className="App">
-      <Header></Header>
+      <Header user={user}></Header>
       <Routes>
         <Route path='/' element={<Layout/>}>
+          <Route path='/login' element={<ModalAuth/>}/>
           <Route path='/' element={<Homepage top5Movies={top5Movies}
-                                             top10Movies={top10Movies} />}></Route>
+                                             top10Movies={top10Movies}
+                                             user={user}
+                                             token={token} />}/>
+          
           <Route path="/:genre" element={<Movies/>}></Route>
-          <Route path="/album/:slug" element={<MovieDetails/>}></Route>
-          <Route path='/play/:slugEpisode' element={<MoviePlay top10Movies={top10Movies}></MoviePlay>}></Route>
+            
+          <Route path="/album/:slug" element={<MovieDetails
+                                              user={user}
+                                              token={token}/>}/>
+
+          <Route path='/play/:slugEpisode' element={<MoviePlay top10Movies={top10Movies}
+                                                               token={token}
+                                                               user={user}  
+                                                    ></MoviePlay>}></Route>
+          <Route path='/account' element={<AccountInfo
+                                          user={user}
+                                          token={token}
+                                         />}></Route>
         </Route>
       </Routes>
       <Footer></Footer>
