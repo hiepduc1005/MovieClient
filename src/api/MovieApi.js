@@ -44,7 +44,19 @@ const getMovieEpisodeBySlug = (slug) => {
     return axios.get(`/api/v1/episode/slug/${slug}`)
 }
 
-export {get5TopRatedMovie ,
+const getMovieBySearch = (query,page,limit) => {
+    return axios.get(`api/v1/movie/search`,{
+        params: {
+            query,
+            page,
+            limit
+        }
+    })
+}
+
+export {
+        getMovieBySearch,
+        get5TopRatedMovie ,
         getTop10RatedMovie ,
         getActionMovies ,
         getAnimeMovies,

@@ -15,7 +15,7 @@ const addMovieToWatchList = (watchlistId,movieId,token) => {
 }
 
 const getAuthenticatedUserWatchList = (token) => {
-    return axios.get('api/v1/watchlist',{
+    return axios.get('api/v1/watchlist/user',{
         headers:{
             Authorization:`Bearer ${token}`
         }

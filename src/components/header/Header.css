@@ -208,6 +208,12 @@
     border-radius: 4px;
 }
 
+.icon-search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .search-icon{
     padding: 0 14px;
     height: 20px;
@@ -269,6 +275,13 @@
 .history-box{
     top: 60px;
    
+}
+
+.history-box .empty-history{
+    width: 280px;
+    padding: 28px;
+    color: #ccc;
+    font-size: 14px;
 }
 
 .history-box-item{

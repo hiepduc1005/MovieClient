@@ -81,6 +81,13 @@ const Movies = () => {
         setActive(prevActive => (prevActive - 1 < 0 ? lengthItems : prevActive - 1));
     }
 
+    const handleNavigateMoviesGenre = (genre) => {
+        if(genre != "Popular on HMovie"){
+           let pathName = genre.charAt(0).toLowerCase() + genre.slice(1)
+           window.location.href = `http://localhost:3000/${pathName}`
+        }
+    }
+
   return ( 
     <div className='movies-container'>      
         <div className="movie-slider">
@@ -127,7 +134,7 @@ const Movies = () => {
                 <div className='movie-slider-genres'>
                     {top5Movies && top5Movies[active]?.genres?.map((item,index) => { 
                         return (
-                            <div key={index+"genreSlider"} className='item'>{item}</div>
+                            <div key={index+"genreSlider"} className='item' onClick={() => handleNavigateMoviesGenre(item)}>{item}</div>
                         )
                     }) }
                     
@@ -187,7 +194,7 @@ const Movies = () => {
                                 <div className='details-info-genres'>
                                     {movie?.genres && movie?.genres?.map((genre) => {
                                         return(
-                                            <div className='item'>{genre}</div>
+                                            <div className='item' onClick={() => handleNavigateMoviesGenre(genre)}>{genre}</div>
                                         )
                                     })}
                                 </div>

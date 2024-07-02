@@ -1,0 +1,134 @@
+.search-container{
+    margin-top: 60px;
+    margin-bottom: 100px;
+}
+
+.search-container .search-title{
+    padding: 40px 0px 26px;
+    color: rgb(236, 236, 236);
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    background: rgb(26, 28, 34);
+    min-height: 123px;
+    margin-bottom: 50px;
+}
+
+.search-container .movie-list{
+    width: 900px;
+    margin: 0 auto;
+}
+
+.movie-search-list .item{
+    position: relative;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.movie-search-list .item img{
+    width: 188px;
+    height: 252px;
+    object-fit: contain;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.movie-search-list .item-info{
+    margin-left: 16px;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(230, 230, 230);
+    max-width: 440px;
+}
+
+.movie-search-list .item-info span{
+    font-weight: bold;
+    color: rgb(153, 153, 153);
+    font-size: 14px;
+    line-height: 20px;
+    padding-right: 4px;
+}
+
+.movie-search-list .item-info .title{
+    text-overflow: ellipsis;
+    line-clamp: 1;
+    overflow: hidden;
+    font-size: 22px;
+    line-height: 33px;
+    max-width: 440px;
+}
+
+.movie-search-list .item-info .title:hover{
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.movie-search-list .item-info .date,
+.movie-search-list .item-info .director,
+.movie-search-list .item-info .cast{
+    margin-top: 10px;
+}
+
+.movie-search-list .episode-container{
+    margin-top: 16px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movie-search-list .episode-container .episode-item{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    line-height: 40px;
+    background: rgb(24, 26, 31);
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+.movie-search-list .episode-container .episode-item:hover{
+    cursor: pointer;
+    background-color: black;
+}
+
+/* paginate */
+
+.pagination-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pagination-container .page-item{
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 36px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.page-item-icon{
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 11px 14px;
+    cursor: pointer;
+
+}
+
+.pagination-container .page-item:hover:not(.page-active),
+.page-item-icon:hover{
+    background-color: #585555;
+}
+
+.page-active{
+    background-color: var(--primary-color);
+}

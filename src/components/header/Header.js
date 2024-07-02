@@ -3,14 +3,22 @@ import { faAngleRight, faArrowDownShortWide, faBriefcaseClock, faClock, faClockF
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
+import Cookies from 'js-cookie'
 
 const Header = ({ user }) => {
     const [isHovered, setIsHovered] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
     const [moviesHistory, setMoviesHistory] = useState([])
+    const [query,setQuery] = useState('')
 
     let currentPath = location.pathname
+
+    const handleLogout = () => {
+        Cookies.remove("token")
+
+        window.location.href='http://localhost:3000'
+    }
 
     const fetchMovieHistory = () => {
         if (user) {
@@ -34,6 +42,7 @@ const Header = ({ user }) => {
 
     useEffect(() => {
         fetchMovieHistory()
+        setQuery('')
     }, [currentPath,user])
 
     useEffect(() => {
@@ -80,11 +89,25 @@ const Header = ({ user }) => {
             </div>
             <div className='header-right-container'>
                 <div className='header-search'>
-                    <div className='header-search-warp'>
-                        <input placeholder='Nhập để tìm...' className='header-search-input'></input>
-                    </div>
+                    <form className='header-search-warp' onSubmit={(e) => {e.preventDefault(); navigate(`/search?s=${query}`)}}>
+                        <input 
+                            type='text'
+                            placeholder='Nhập để tìm...' 
+                            className='header-search-input'
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            >   
+                        </input>
+                    </form>
                     <span className='line'></span>
-                    <FontAwesomeIcon className='search-icon' style={{ padding: "0 14px", height: "20px", color: "white" }} icon={faSearch}></FontAwesomeIcon>
+                    <div className='icon-search-container' onClick={() => navigate(`/search?s=${query}`)}>
+                        <FontAwesomeIcon 
+                            className='search-icon'
+                            style={{ padding: "0 14px", height: "20px", color: "white" }}
+                            icon={faSearch}>
+                            
+                        </FontAwesomeIcon>
+                    </div>
                 </div>
                 <div className='header-history'>
                     <span className='header-history-title'>History</span>
@@ -93,7 +116,7 @@ const Header = ({ user }) => {
                         {
                             Array.isArray(moviesHistory) && moviesHistory.length === 0
                                 ?
-                                (<div>Your watch history is empty. Start watching your favorite movies now!</div>)
+                                (<div className='empty-history'>Your watch history is empty. Start watching your favorite movies now!</div>)
                                 : (
                                     moviesHistory?.map((movie) => {
                                         return (
@@ -117,10 +140,14 @@ const Header = ({ user }) => {
                                     <FontAwesomeIcon className='more-icon' icon={faAngleRight}></FontAwesomeIcon>
                                 </span>
                             </div>
-                            :
+                            : ''
+                        }
+                        {(moviesHistory.length === 4 && !user)
+                            ?
                             <div className='history-box-footer-unauth'>
                                 <span className='title'>Sign in to store a more extensive movie watch history.</span>
                             </div>
+                            : ''
                         }
                     </div>
                 </div>
@@ -134,7 +161,7 @@ const Header = ({ user }) => {
                 </div>
                 <div className='header-account'>
                     {user ?
-                        <div className='header-account-icon'>
+                        <div className='header-account-icon' onClick={() => navigate('/account')}>
                             <img src={user?.avatarUrl} alt="User Avatar"></img>
                         </div>
                         :
@@ -175,23 +202,23 @@ const Header = ({ user }) => {
                                         <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
                                     </div>
                                 </div>
-                                <div className='account-box-item-auth'>
+                                <div className='account-box-item-auth' onClick={() => navigate('/account')}>
                                     <div className='item-right'>
                                         <div className='icon-container'>
                                             <FontAwesomeIcon width="18px" size='1x' icon={faUserAlt}></FontAwesomeIcon>
                                         </div>
-                                        <div className='item-right-title'>My Account</div>
+                                        <div  className='item-right-title'>My Account</div>
                                     </div>
                                     <div className='item-left'>
                                         <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
                                     </div>
                                 </div>
-                                <div className='account-box-item-auth'>
+                                <div className='account-box-item-auth' onClick={() => handleLogout()}>
                                     <div className='item-right'>
                                         <div className='icon-container'>
                                             <FontAwesomeIcon width="18px" size='1x' icon={faSignOut}></FontAwesomeIcon>
                                         </div>
-                                        <div className='item-right-title'>Logout</div>
+                                        <div  className='item-right-title'>Logout</div>
                                     </div>
                                     <div className='item-left'>
                                         <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
@@ -202,7 +229,7 @@ const Header = ({ user }) => {
                             <div className="account-box-item">
                                 <div className='account-box-item-title'>Đăng nhập để theo dõi các nội dung mới nhất.</div>
                                 <div className='account-box-item-button'>
-                                    <button>
+                                    <button onClick={() => navigate("/login")}>
                                         Login
                                     </button>
                                 </div>

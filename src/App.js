@@ -13,6 +13,7 @@ import ModalAuth from './components/modal/ModalAuth';
 import Cookies from 'js-cookie';
 import { getAuthenticatedUser } from './api/UserApi';
 import AccountInfo from './components/account/AccountInfo';
+import Search from './components/search/Search';
 
 function App() {
   const [top5Movies, setTop5Movies] = useState();
@@ -74,7 +75,6 @@ function App() {
       <Header user={user}></Header>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route path='/login' element={<ModalAuth/>}/>
           <Route path='/' element={<Homepage top5Movies={top5Movies}
                                              top10Movies={top10Movies}
                                              user={user}
@@ -94,6 +94,7 @@ function App() {
                                           user={user}
                                           token={token}
                                          />}></Route>
+          <Route path='/search' element={<Search></Search>}></Route>
         </Route>
       </Routes>
       <Footer></Footer>

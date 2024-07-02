@@ -32,16 +32,21 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
       },[show])
     
       const handelAddMovieToWatchLater = async (watchlistId,movieId) => {
-        try{
-          const data = await addMovieToWatchList(watchlistId,movieId,token);
-    
-          const check =  handleCheckMovieInWatchList(watchlistId,movieId)
-          if(check && data){
-            setShow(true)
-          }
-    
-        }catch(err){
-            console.log(err)
+        if(user && token){
+            try{
+              
+              const data = await addMovieToWatchList(watchlistId,movieId,token);
+        
+              const check =  handleCheckMovieInWatchList(watchlistId,movieId)
+              if(check && data){
+                setShow(true)
+              }
+        
+            }catch(err){
+                console.log(err)
+            }
+        }else{
+            window.location.href='http://localhost:3000/login'
         }
      }  
     
@@ -139,7 +144,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
         };
         
         reFreshSlider();
-        if(top5Movies){
+        if(top5Movies && user){
             handleCheckMovieInWatchList(user?.watchList?.id,top5Movies[active].id)
         }
         if (intervalRef.current) {
@@ -169,7 +174,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
            navigate(pathName);
         }
     }
-
+    
     const handleNavigate = (path) => {
         navigate(path)
     } 
@@ -219,7 +224,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                 <div className='movie-slider-genres'>
                     {top5Movies && top5Movies[active].genres.map((item,index) => { 
                         return (
-                            <div key={index+"genreSlider"} className='item'>{item}</div>
+                            <div key={index+"genreSlider"} className='item' onClick={() => handleNavigateMoviesGenre(item)}>{item}</div>
                         )
                     }) }
                     
@@ -283,7 +288,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                                 <div className='details-info-genres'>
                                     {movie?.genres && movie?.genres.map((genre,index) => {
                                         return(
-                                            <div key={`details-info-genres${index}`} className='item'>{genre}</div>
+                                            <div key={`details-info-genres${index}`} className='item' onClick={() => handleNavigateMoviesGenre(genre)}>{genre}</div>
                                         )
                                     })}
                                 </div>

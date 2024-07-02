@@ -5,7 +5,7 @@
 .movies-container::before{
     content: "";
     display: block;
-    padding-top: 12%;
+    padding-top: 10%;
 }
 
 .movie-slider{

@@ -30,16 +30,21 @@ const MovieDetails = ({user,token}) => {
   },[show])
 
   const handelAddMovieToWatchLater = async (watchlistId,movieId) => {
-    try{
-      const data = await addMovieToWatchList(watchlistId,movieId,token);
-
-      const check =  handleCheckMovieInWatchList(user?.watchList?.id,movie?.id)
-      if(check && data){
-        setShow(true)
+    if(user && token){
+      try{
+        const data = await addMovieToWatchList(watchlistId,movieId,token);
+  
+        const check =  handleCheckMovieInWatchList(user?.watchList?.id,movie?.id)
+        if(check && data){
+          setShow(true)
+        }
+  
+      }catch(err){
+          console.log(err)
       }
 
-    }catch(err){
-        console.log(err)
+    }else{
+      window.location.href = 'http://localhost:3000/login'
     }
  }  
 

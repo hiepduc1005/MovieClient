@@ -6,7 +6,7 @@
     content: '';
     display: block;
     position: relative;
-    padding-top: 12%;
+    padding-top: 10%;
 }
 
 .movie-slider{
@@ -99,7 +99,6 @@
     position: relative;
     background-color: transparent;
     width: 450px;
-   
 }
 
 .movie-slider-title{
@@ -176,6 +175,7 @@
     padding: 0px 5px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .movie-slider-des{
