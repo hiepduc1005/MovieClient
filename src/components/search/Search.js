@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './Search.css'
 import { getMovieBySearch } from '../../api/MovieApi'
 import { useSearchParams } from 'react-router-dom'
-import ReactPaginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons';
 
 const Search = () => {
     const [currentPage, setCurrentPage] = useState(1)

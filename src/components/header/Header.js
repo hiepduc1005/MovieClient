@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faArrowDownShortWide, faBriefcaseClock, faClock, faClockFour, faClockRotateLeft, faDoorClosed, faDoorOpen, faDropletSlash, faFilm, faGlobe, faSearch, faSignOut, faSignOutAlt, faUser, faUserAlt, faUserAltSlash, faUserCircle, faUserClock } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faClock, faSignOut, faUserAlt} from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
@@ -43,7 +43,7 @@ const Header = ({ user }) => {
     useEffect(() => {
         fetchMovieHistory()
         setQuery('')
-    }, [currentPath,user])
+    }, [currentPath,user,fetchMovieHistory])
 
     useEffect(() => {
         const handleScroll = () => {

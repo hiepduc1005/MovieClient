@@ -9,7 +9,6 @@ import Movies from './components/moviesgenre/Movies';
 import Footer from './components/footer/Footer';
 import MovieDetails from './components/moviedetails/MovieDetails';
 import MoviePlay from './components/movieplay/MoviePlay';
-import ModalAuth from './components/modal/ModalAuth';
 import Cookies from 'js-cookie';
 import { getAuthenticatedUser } from './api/UserApi';
 import AccountInfo from './components/account/AccountInfo';

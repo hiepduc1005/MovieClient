@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './AccountInfo.css'
-import { faCheckCircle, faCircle, faCircleCheck, faCircleExclamation, faCircleH, faCircleNodes, faCirclePause, faCircleRight, faDotCircle, faExclamationTriangle, faL, faPlay, faPlayCircle, faTriangleCircleSquare, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faPlayCircle} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addMovieToWatchList, getAuthenticatedUserWatchList } from '../../api/WatchListApi';
 import { useNavigate } from 'react-router';
@@ -74,7 +74,7 @@ const AccountInfo = ({user,token}) => {
 
     useEffect(() => {
         handleGetWatchList()
-    },[])
+    },[handleGetWatchList])
 
     const handleClickDelete = async () => {
         if(watchListDeleteSelected.length > 0){
@@ -93,14 +93,14 @@ const AccountInfo = ({user,token}) => {
         }
         else setIsSelectAll(false)
 
-    },[watchListDeleteSelected])
+    },[watchListDeleteSelected,listMovieWatchList?.movieResponses?.length])
 
     return (
         <div className='account-info-container'>
             <div className='account-sidebar'>
                 <div className='account-sidebar-header'>
                     <div className='avatar'>
-                        <img src={user?.avatarUrl}></img>
+                        <img alt='' src={user?.avatarUrl}></img>
                     </div>
                     <div className='username'>{user?.username}</div>
                 </div>
@@ -132,7 +132,7 @@ const AccountInfo = ({user,token}) => {
                             <div className='subtitle'>Profile</div>
                             <div className='profile'>
                                 <div className='profile-avatar'>
-                                    <img src={user?.avatarUrl}></img>
+                                    <img alt='' src={user?.avatarUrl}></img>
                                 </div>
                                 <div className='profile-info-container'>
                                     <div className='profile-info'>
@@ -181,7 +181,7 @@ const AccountInfo = ({user,token}) => {
                             return (
                         <div className='movie-item' onClick={()=> window.location.href=`http://localhost:3000/play/${movie?.movieHistoryResponse?.slug}-episode-${movie?.episodeNumber}`}>
                             <div className='img'>
-                                <img src={movie?.movieHistoryResponse?.backDropUrl}></img>
+                                <img alt='' src={movie?.movieHistoryResponse?.backDropUrl}></img>
                                 <div className='episode-number'>Watch to Episode {movie?.episodeNumber}</div>
                                 <FontAwesomeIcon className='play-icon' icon={faPlayCircle}></FontAwesomeIcon>
                             </div>
@@ -240,7 +240,7 @@ const AccountInfo = ({user,token}) => {
                                             <div className='circle-icon-big'></div>
 
                                         }
-                                        <img src={movie?.backDropUrl}></img>                            
+                                        <img alt='' src={movie?.backDropUrl}></img>                            
                                         <FontAwesomeIcon className='play-icon play-icon-watchlater' icon={faPlayCircle}></FontAwesomeIcon>
                                     </div>
                                     <div className='movie-title'>{movie?.title}</div>

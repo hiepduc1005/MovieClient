@@ -3,7 +3,7 @@ import './MoviePlay.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getMovieEpisodeBySlug } from '../../api/MovieApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleLeft, faAngleRight, faAngleUp, faCommentAlt, faShareFromSquare,faStar,} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleRight, faAngleUp, faCommentAlt, faShareFromSquare,faStar,} from '@fortawesome/free-solid-svg-icons'
 import { addMovieToHistory } from '../../api/WatchHistoriesApi'
 
 const MoviePlay = ({top10Movies,token,user}) => {
@@ -37,7 +37,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
 
   const addMovieToWatchHistory = async (userId,movieId,episodeNumber,accesstoken) => {
     try{
-      const data = await addMovieToHistory(userId,movieId,episodeNumber,accesstoken)
+    await addMovieToHistory(userId,movieId,episodeNumber,accesstoken)
     }catch(err){
       console.log(err)
     }
@@ -85,7 +85,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
           episode?.episode?.slug
           )
     }
-  },[episode])
+  },[episode,token,user])
   
   useEffect(() => {
     const desHeight = descriptionRef.current.offsetHeight
@@ -129,7 +129,8 @@ const MoviePlay = ({top10Movies,token,user}) => {
     <div className='movieplay-container'>
       <div className='movieplay-top'>
         <div className='movieplay-left'>
-        <iframe 
+        <iframe
+            title={`Episode ${episode?.episode?.episodeNumber}`}
             id='iframe'
             class="iframe"
             src={episode?.episode?.episodeUrl}
@@ -205,7 +206,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
                     return (
                         <div className='recomment-item' onClick = {() => navigate(`/album/${movie.slug}`)}>
                           <div className='recomment-item-img' ref={itemRef}>
-                            <img src={movie?.postUrl}/>
+                            <img alt='' src={movie?.postUrl}/>
                           </div>
                           <div className='recomment-item-title'>{movie?.title}</div>
                         </div>
@@ -234,7 +235,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
                       <span className={`rank-index ${(index+1) <= 3 ? 'primary-color' : ''}`}>{index+1}</span>
                       <span>{movie?.title}</span>
                     </div>
-                    <img className={`${hoverIndex===index ? 'show-image' : ''}`} src={movie?.postUrl}></img>
+                    <img alt='' className={`${hoverIndex===index ? 'show-image' : ''}`} src={movie?.postUrl}></img>
                   </div>
               )
             })}

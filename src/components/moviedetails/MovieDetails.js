@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './MovieDetails.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faFlag, faPlay, faShare, faShareAlt, faShareAltSquare, faShareFromSquare, faTasks } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faPlay, faShareFromSquare} from '@fortawesome/free-solid-svg-icons'
 import { getMovieBySlug } from '../../api/MovieApi'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate} from 'react-router'
 import { addMovieToWatchList, checkMovieInWatchList } from '../../api/WatchListApi'
 
 const MovieDetails = ({user,token}) => {
@@ -27,7 +27,7 @@ const MovieDetails = ({user,token}) => {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  },[show])
+  },[show,navigate])
 
   const handelAddMovieToWatchLater = async (watchlistId,movieId) => {
     if(user && token){
@@ -70,7 +70,7 @@ const MovieDetails = ({user,token}) => {
       setNeedCollapse(true)
     } 
     
-  },[movie])
+  },[movie,user, handleCheckMovieInWatchList])
 
   const handleClickEpisodeTap = () => {
     setIsEpisodeTapSelected(true)
@@ -95,12 +95,12 @@ const MovieDetails = ({user,token}) => {
   
   useEffect(() => {
     fetchMovieBySlug(location.pathname.slice(7))
-},[])
+},[location.pathname])
   return (
     <div className='movie-details-container'>
       <div className='movie-details-imgage'>
         <div className='img-container'>
-          <img src={movie?.backDropUrl}></img>
+          <img alt='' src={movie?.backDropUrl}></img>
         <div className='left-layer'></div>
         <div className='bottom-layer'></div>
         </div>
@@ -176,7 +176,7 @@ const MovieDetails = ({user,token}) => {
                   return (
                   <div className='item' onClick={() => navigate(`/play/${episode.slug}`)}>
                     <div className='img-container'>
-                      <img src={movie?.backDropUrl}></img>
+                      <img alt='' src={movie?.backDropUrl}></img>
                     </div>
                     <div className='episode-title'>{movie?.title} Episode {episode?.episodeNumber}</div>
                   </div>

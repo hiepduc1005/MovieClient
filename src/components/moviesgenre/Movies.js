@@ -9,10 +9,8 @@ const Movies = () => {
     const [active, setActive] = useState(0)
     const [lengthItems, setLengthItems] = useState()
     const intervalRef = useRef(null);
-
-    const [moviesArray,setMoviesArray] = useState([])
     const location = useLocation();
-    const [genre,setGenre] = useState(location.pathname.slice(1))
+    const genre = location.pathname.slice(1)
     const [movies,setMovies] = useState()
     const [top5Movies, setTop5Movies] = useState()
 
@@ -39,7 +37,7 @@ const Movies = () => {
 
     useEffect(()=>{
         fetchMovie();
-    },[])
+    },[fetchMovie])
 
     useEffect(() => {
         setLengthItems(top5Movies?.length - 1);
@@ -82,7 +80,7 @@ const Movies = () => {
     }
 
     const handleNavigateMoviesGenre = (genre) => {
-        if(genre != "Popular on HMovie"){
+        if(genre !== "Popular on HMovie"){
            let pathName = genre.charAt(0).toLowerCase() + genre.slice(1)
            window.location.href = `http://localhost:3000/${pathName}`
         }
@@ -95,7 +93,7 @@ const Movies = () => {
             {top5Movies?.map((movie,index) => {
                 return (
                     <div key={index+movie.imdbId} className='movie-slider-item'>
-                        <img src={movie.backDropUrl}></img>
+                        <img alt='' src={movie.backDropUrl}></img>
                     </div>
                 );
             })} 
@@ -166,7 +164,7 @@ const Movies = () => {
                             return(
                         <div key={`moviesgenre${movie.imdbId}`} className='movie-polular-item'>            
                             <div className='movie-polular-item-image'>
-                            <img src={movie?.postUrl}>
+                            <img alt='' src={movie?.postUrl}>
                                 
                             </img>
                             <div className='movie-polular-item-rate'>
@@ -179,7 +177,7 @@ const Movies = () => {
                             
                             <div className='movie-polular-item-detail'>
                             <div className='details-image-container'>
-                                <img src={movie?.backDropUrl}></img>
+                                <img alt='' src={movie?.backDropUrl}></img>
                             </div>
                             <div className='details-info'>
                                 <div className='details-info-title' onClick={() => {navigate(`/album/${movie.slug}`);console.log(movie.slug)}}>{movie.title}</div>

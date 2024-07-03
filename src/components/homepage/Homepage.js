@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Homepage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlayCircle, faStairs, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons'
 import { getActionMovies, getAnimeMovies, getComedyMovies, getDramaMovies } from '../../api/MovieApi'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { addMovieToWatchList, checkMovieInWatchList } from '../../api/WatchListApi'
 
 const Homepage = ({top5Movies,top10Movies,user,token}) => {
@@ -16,7 +15,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
     const [comedyMovies, setComedyMovies] = useState()
     const [dramaMovies, setDramaMovies] = useState()
     const [moviesArray,setMoviesArray] = useState([])
-    const [movieTitle,setMoviesTitle] = useState(['Popular on HMovie','Anime',"Action","Drama","Comedy"])
+    const movieTitle = ['Popular on HMovie','Anime',"Action","Drama","Comedy"]
     const navigate = useNavigate()
 
     const [show,setShow] = useState(false)
@@ -169,7 +168,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
     }
 
     const handleNavigateMoviesGenre = (genre) => {
-        if(genre != "Popular on HMovie"){
+        if(genre !== "Popular on HMovie"){
            let pathName = genre.charAt(0).toLowerCase() + genre.slice(1)
            navigate(pathName);
         }
@@ -186,7 +185,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
             {top5Movies?.map((movie,index) => {
                 return (
                     <div key={index+movie.imdbId} className='movie-slider-item'>
-                        <img src={movie.backDropUrl}></img>
+                        <img alt='' src={movie.backDropUrl}></img>
                     </div>
                 );
             })} 
@@ -260,7 +259,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                             return(
                         <div className='movie-polular-item' key={`movie-polular-item${movie?.imdbId}${index}`}>            
                             <div className='movie-polular-item-image'>
-                            <img src={movie.postUrl}>
+                            <img alt='' src={movie.postUrl}>
                                 
                             </img>
                             <div className='movie-polular-item-rate'>
@@ -273,7 +272,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                             
                             <div className='movie-polular-item-detail'>
                             <div className='details-image-container'>
-                                <img src={movie.backDropUrl}></img>
+                                <img alt='' src={movie.backDropUrl}></img>
                             </div>
                             <div className='details-info'>
                                 <div className='details-info-title' onClick={()=> handleNavigate(`/album/${movie.slug}`)}>{movie.title}</div>
