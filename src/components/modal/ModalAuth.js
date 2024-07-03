@@ -12,7 +12,6 @@ const ModalAuth = () => {
     const navigate = useNavigate()
     const handleLoginGoogle = () => {
         window.location.href = 'https://movie-server-v2.onrender.com/oauth2/authorization/google';
-                // window.location.href = 'http://localhost:8080/oauth2/authorization/google';
 
     };
     
