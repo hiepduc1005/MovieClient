@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faClock, faSignOut, faUserAlt} from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faClock, faFilm, faGlobe, faSearch, faSignOut, faUserAlt} from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
