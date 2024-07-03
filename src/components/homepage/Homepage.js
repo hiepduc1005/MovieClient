@@ -45,7 +45,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                 console.log(err)
             }
         }else{
-            window.location.href='http://localhost:3000/login'
+            window.location.href='https://hmovie1005.netlify.app/login'
         }
      }  
     
