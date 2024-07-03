@@ -238,6 +238,7 @@ iframe{
     box-sizing: border-box;
     position: relative;
     padding-right: 26px;
+    transition: 1s;
 }
 
 .recommend-title{
@@ -247,13 +248,24 @@ iframe{
     font-weight: 700;
 }
 
+.recommend-slider{
+    overflow: hidden;
+    width: 100%;
+    
+}
+
 .recommend-list{
+    height: 100%;
     width: 100%;
     display: flex;
-    overflow: hidden;
+    position: relative;
+    top: 0;
+    right: 0;
     padding-right: 16px;
     padding-top: 22px;
+    padding-left: 6px;
     padding-bottom: 14px;
+    transition: 0.3s;
 }
 
 .arrow-right{
@@ -263,6 +275,8 @@ iframe{
     opacity: 0.6;
     cursor: pointer;
 }
+
+
 
 .arrow-right:hover{
     opacity: 1;
@@ -274,6 +288,7 @@ iframe{
     flex-basis:  calc(16.6667% + 3.2223px);
     flex-shrink: 0;
     transition: 0.2s;
+    position: relative;
 }
 
 .recomment-item-img{
@@ -284,7 +299,7 @@ iframe{
 .recomment-item-img img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -303,8 +318,8 @@ iframe{
     cursor: pointer;
 }
 
-.recomment-item:hover,
-.recomment-item-title:hover{
+.recomment-item:hover
+{
     color: var(--primary-color);
     transform: scale(1.1);
 }

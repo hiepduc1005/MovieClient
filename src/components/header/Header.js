@@ -67,12 +67,12 @@ const Header = ({ user }) => {
     return (
         <div className='header-container'>
             <div className='header-left-container'>
-                <NavLink className='header-logo' to="/">
+                <div className='header-logo' onClick={() => window.location.href='http://localhost:3000'}>
                     <div>
                         <FontAwesomeIcon style={{ height: "30px" }} icon={faFilm} />
                     </div>
                     <span className='header-logo-title'>HMovie</span>
-                </NavLink>
+                </div>
                 <NavLink className='header-home' to="/">Trang chủ</NavLink>
                 <div className='header-genres'>
                     <span className='header-genres-title'>Thể loại</span>
@@ -120,7 +120,7 @@ const Header = ({ user }) => {
                                 : (
                                     moviesHistory?.map((movie) => {
                                         return (
-                                            <div className='history-box-item' key={`movieHistoryBox${movie.movieId}`}>
+                                            <div className='history-box-item' key={`movieHistoryBox${movie.movieId}`} onClick={() => navigate(`/play/${movie.slug}-episode-${movie.episodeNumber}`)}>
                                                 <div className='img-container'>
                                                     <img src={movie?.backDropUrl} alt={movie?.movieTitle}></img>
                                                 </div>

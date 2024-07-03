@@ -3,7 +3,7 @@ import './MoviePlay.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getMovieEpisodeBySlug } from '../../api/MovieApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleRight, faAngleUp, faCommentAlt, faShareFromSquare,faStar,} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleLeft, faAngleRight, faAngleUp, faCommentAlt, faShareFromSquare,faStar,} from '@fortawesome/free-solid-svg-icons'
 import { addMovieToHistory } from '../../api/WatchHistoriesApi'
 
 const MoviePlay = ({top10Movies,token,user}) => {
@@ -18,6 +18,9 @@ const MoviePlay = ({top10Movies,token,user}) => {
   const descriptionRef = useRef(null)
   const desContainerRef = useRef(null)
   const navigate = useNavigate()
+  const sliderRef = useRef(null)
+  const itemRef = useRef(null)
+
 
 
   const fetchEpisodeBySlug = async (slug) => {
@@ -71,7 +74,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
   }
   
   useEffect(() => {
-    if(user && episode){
+    if(token && user && episode){
       addMovieToWatchHistory(user?.id,episode?.movie?.id,episode?.episode?.episodeNumber,token)
     }else if (!user && episode) {
       addMovieHistoryUnauthenticatedUser(
@@ -108,6 +111,18 @@ const MoviePlay = ({top10Movies,token,user}) => {
 
   const handleCollapse = () => {
     setIsCollapse(!isCollapse)
+  }
+
+  let current = 0
+
+  const handleOnClickArrowRight = () => {
+    current++
+    let checkleft = (itemRef.current.offsetWidth + 14) * current
+    if(current === 4){
+      current = -1
+    }   
+    
+    sliderRef.current.style.transform = `translateX(${-checkleft}px)`
   }
 
   return (
@@ -184,70 +199,22 @@ const MoviePlay = ({top10Movies,token,user}) => {
             <div className='horizone-line'></div>
             <div className='recommend-container'>
               <div className='recommend-title'>Reconmmended</div>
-              <div className='recommend-list'>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
+              <div className='recommend-slider'  >
+                <div className='recommend-list' ref={sliderRef}>
+                  {top10Movies?.map((movie) => {
+                    return (
+                        <div className='recomment-item' onClick = {() => navigate(`/album/${movie.slug}`)}>
+                          <div className='recomment-item-img' ref={itemRef}>
+                            <img src={movie?.postUrl}/>
+                          </div>
+                          <div className='recomment-item-title'>{movie?.title}</div>
+                        </div>
+                    )
+                  })}
                 </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-                <div className='recomment-item'>
-                  <div className='recomment-item-img'>
-                    <img src='https://image.tmdb.org/t/p/original/aosm8NMQ3UyoBVpSxyimorCQykC.jpg'/>
-                  </div>
-                  <div className='recomment-item-title'>Fox Spirit Matchmaker: Yue Hong"</div>
-                </div>
-              
+
               </div>
-              <div className='arrow-right'>
+              <div className='arrow-right' onClick={() => handleOnClickArrowRight()}>
                   <FontAwesomeIcon size='2x' icon={faAngleRight}></FontAwesomeIcon>
               </div>
             </div>

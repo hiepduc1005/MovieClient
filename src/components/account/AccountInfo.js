@@ -3,6 +3,7 @@ import './AccountInfo.css'
 import { faCheckCircle, faCircle, faCircleCheck, faCircleExclamation, faCircleH, faCircleNodes, faCirclePause, faCircleRight, faDotCircle, faExclamationTriangle, faL, faPlay, faPlayCircle, faTriangleCircleSquare, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addMovieToWatchList, getAuthenticatedUserWatchList } from '../../api/WatchListApi';
+import { useNavigate } from 'react-router';
 
 const AccountInfo = ({user,token}) => {
     const [isAccountSeleted, setAccountSeleted] = useState(true)
@@ -14,6 +15,14 @@ const AccountInfo = ({user,token}) => {
 
     const [watchListDeleteSelected,setWatchListDeleteSelected] = useState([])
     const [listMovieWatchList,setListMovieWatchList] = useState([])
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(!user || !token){
+            window.location.href="http://localhost:3000"
+        }
+    })
 
     const handleAccountClick = () => {
         setAccountSeleted(true)
@@ -61,6 +70,7 @@ const AccountInfo = ({user,token}) => {
             console.log(err)
         }
     }
+
 
     useEffect(() => {
         handleGetWatchList()
@@ -169,7 +179,7 @@ const AccountInfo = ({user,token}) => {
                     <div className='movie-history'>
                         {user && user?.watchHistoryResponses?.map((movie) => {
                             return (
-                        <div className='movie-item'>
+                        <div className='movie-item' onClick={()=> window.location.href=`http://localhost:3000/play/${movie?.movieHistoryResponse?.slug}-episode-${movie?.episodeNumber}`}>
                             <div className='img'>
                                 <img src={movie?.movieHistoryResponse?.backDropUrl}></img>
                                 <div className='episode-number'>Watch to Episode {movie?.episodeNumber}</div>
@@ -221,7 +231,7 @@ const AccountInfo = ({user,token}) => {
                     <div className='movie-watchlater'>
                         {listMovieWatchList?.movieResponses?.map((movie,index) => {
                             return (
-                                <div className='movie-item' onClick={clickEdit ? () => handleClickItem(movie?.id) : null}>
+                                <div className='movie-item' onClick={clickEdit ? () => handleClickItem(movie?.id) : () => navigate(`/album/${movie.slug}`)}>
                                     <div className='img'> 
                                         {(watchListDeleteSelected.includes(movie?.id))
                                             ?
