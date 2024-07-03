@@ -17,7 +17,7 @@ const Header = ({ user }) => {
     const handleLogout = () => {
         Cookies.remove("token")
 
-        window.location.href='http://localhost:3000'
+        window.location.href='https://hmovie1005.netlify.app'
     }
 
     const fetchMovieHistory = () => {
