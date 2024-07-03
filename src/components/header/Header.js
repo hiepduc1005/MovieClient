@@ -67,7 +67,7 @@ const Header = ({ user }) => {
     return (
         <div className='header-container'>
             <div className='header-left-container'>
-                <div className='header-logo' onClick={() => window.location.href='http://localhost:3000'}>
+                <div className='header-logo' onClick={() => window.location.href='https://hmovie1005.netlify.app'}>
                     <div>
                         <FontAwesomeIcon style={{ height: "30px" }} icon={faFilm} />
                     </div>
