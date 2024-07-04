@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes , Route} from "react-router-dom"
+import {Routes , Route, useSearchParams} from "react-router-dom"
 import Layout from './Layout';
 import Header from './components/header/Header';
 import Homepage from './components/homepage/Homepage';
@@ -13,12 +13,40 @@ import Cookies from 'js-cookie';
 import { getAuthenticatedUser } from './api/UserApi';
 import AccountInfo from './components/account/AccountInfo';
 import Search from './components/search/Search';
+import { useCookies } from 'react-cookie';
 
 function App() {
   const [top5Movies, setTop5Movies] = useState();
   const [top10Movies, setTop10Movies] = useState();
   const [user,setUser] = useState()
-  const token = Cookies.get("token")
+  const [cookies, setCookie] = useCookies(['token']);
+  const location = useLocation();
+  const [token,setToken] = useState()
+
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get("token");
+    if (tokenFromCookies) {
+      setToken(tokenFromCookies);
+    }
+  }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const encodedToken = searchParams.get('t');
+
+    if (encodedToken) {
+      try {
+        const decodedToken = decodeURIComponent(atob(encodedToken));
+        setCookie('token', decodedToken, { path: '/', secure: true, sameSite: 'none', maxAge: 86400 * 30 });
+        
+        searchParams.delete('t');
+        const newUrl = `${location.pathname}${searchParams.toString() ? `? ${searchParams.toString()}` : ''}`;
+        window.history.replaceState({}, document.title, newUrl);
+      } catch (error) {
+        console.error('Error decoding or setting token:', error);
+      }
+    }
+  },[location.search, setCookie])
   
   const fetchAuthenticatedUser= async (token) => {
       try {
