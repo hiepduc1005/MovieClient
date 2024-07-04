@@ -38,10 +38,10 @@ function App() {
       try {
         const decodedToken = decodeURIComponent(atob(encodedToken));
         setCookie('token', decodedToken, { path: '/', secure: true, sameSite: 'none', maxAge: 86400 * 30 });
-        
         searchParams.delete('t');
         const newUrl = `${location.pathname}${searchParams.toString() ? `? ${searchParams.toString()}` : ''}`;
-        window.history.replaceState({}, document.title, newUrl);
+        window.history.replaceState({}, document.title, newUrl); 
+        setToken(decodedToken)
       } catch (error) {
         console.error('Error decoding or setting token:', error);
       }
