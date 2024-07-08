@@ -68,6 +68,56 @@
         width: 138px;
     }
 
+     /* movie details */
+     .movie-details-container{
+        margin: 0 15px !important;
+     }
+
+     .movie-details-container::before{
+        padding: 0 !important;
+     }
+
+     .movie-details-imgage{
+        position: relative !important;
+        width: 100% !important;
+    }
+
+     .movie-details-imgage .left-layer{
+        width: 0 !important;
+        height:  0 !important;
+        background-image: none !important;
+     }
+
+     .movie-details-info{
+        margin-top: 0 !important;
+        
+     }
+
+     .movie-details-content {
+        width: 100% !important;
+     }
+
+     .movie-details-episode{
+        padding-right:  0 !important;
+     }
+
+     .movie-details-content .title {
+        font-size: 24px !important;
+     }
+
+     .tap-list {
+        font-size: 14px;
+     }
+
+     .tap-episodes .item{
+        width: calc(44%) !important;
+     }
+
+     .tap-trailer iframe{
+        width: 100% !important;
+        height: 50vw !important;
+     }
+
     
 }
 
@@ -208,6 +258,66 @@
 
      .header-logo .film-icon{
         display: none !important;
+     }
+
+     /* movie details */
+     .movie-details-container{
+        margin: 0 15px !important;
+     }
+
+     .movie-details-container::before{
+        padding: 0 !important;
+     }
+
+     .movie-details-imgage{
+        position: relative !important;
+        width: 100% !important;
+    }
+
+     .movie-details-imgage .left-layer{
+        width: 0 !important;
+        height:  0 !important;
+        background-image: none !important;
+     }
+
+     .movie-details-info{
+        margin-top: 0 !important;
+        
+     }
+
+     .movie-details-content {
+        width: 100% !important;
+     }
+
+     .movie-details-episode{
+        padding-right:  0 !important;
+     }
+
+     .movie-details-content .title {
+        font-size: 24px !important;
+     }
+
+     .movie-details-content .description,
+     .movie-details-content .cast{
+        font-size: 12px !important;
+     }
+
+     .btn-watchlater span,
+     .btn-share span{
+        display: none;
+     }
+
+     .tap-list {
+        font-size: 14px;
+     }
+
+     .tap-episodes .item{
+        width: calc(44%) !important;
+     }
+
+     .tap-trailer iframe{
+        width: 100% !important;
+        height: 50vw !important;
      }
 }
 
