@@ -1,0 +1,213 @@
+@media (min-width: 1024px) and (max-width: 1272px){
+    .movie-polular-item {
+        width: calc(16.66667% - 13px) !important;
+    }
+
+     /* header */
+     .header-left-container .header-home{
+        display: none !important;
+    }
+
+    .header-search-input{
+        width: 138px !important;
+    }
+
+    
+}
+
+@media (min-width: 740px) and (max-width: 1023px){
+   /* homepage */
+    .movie-polular-item {
+        width: calc(25% - 11px) !important;
+    }
+
+    .icon-angle-right {
+        right: 2% !important;
+    }
+
+    .movie-slider-dot {
+        left: 84% !important;
+        bottom: 42% !important;
+    }
+
+    .movie-slider-details .movie-slider-des,
+    .movie-slider-details .movie-slider-genres,
+    .movie-slider-details .extra-details{
+        font-size: 12px;
+    }
+
+    .movie-slider-watchlater,
+    .movie-slider-playbutton{
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .watchlater-icon{
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .icon-play{
+       font-size: 36px !important;
+    }
+
+    
+    
+
+    /* header */
+    .header-account .header-account-title,
+    .header-language .header-language-title,
+    .header-history .header-history-title,
+    .header-left-container .header-home{
+        display: none;
+    }
+
+    
+
+    .header-search-input{
+        width: 138px;
+    }
+
+    
+}
+
+@media (max-width: 740px){
+    body{
+        margin-top: 88px;
+    }
+
+    .homepage-container::before {
+        padding-top: 22vw !important;
+    }
+    .movie-slider{
+        box-shadow: none !important;
+        height: 56vw !important;
+    }
+
+    .movie-slider-item img {
+        object-fit: contain !important;
+    }
+    
+    .movie-slider-details{
+        width: 100% !important;
+        padding-left: 15px !important;
+    }
+
+    .movie-slider-item::before{
+        background-image: none !important;
+        background-color: transparent !important;
+    }
+
+    .movie-slider-title{
+        font-size: 24px !important;
+        width: 70%  ;
+    }
+
+    .movie-slider-dot{
+        bottom: 12% !important; 
+        left: 76% !important;
+    }
+
+    .movie-slider-dot .active {
+        width: 9px !important;
+    }
+
+    .movie-slider-dot li{
+        width: 3px !important;
+        height: 3px !important;
+    }
+
+    .movie-slider-buttons,
+    .movie-slider-button,
+    .movie-slider-des{
+        display: none !important;
+    }
+
+
+    .movie-polular-list-container{
+        padding-top: 0 !important;
+        margin-top: 10px;
+    }
+
+    .polular-list-wraper{
+        padding: 0 15px;
+    }
+    .movie-polular-list{
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .movie-polular-item {
+        width: calc(31.7%) !important;
+        margin-right: 8px !important;
+        flex-shrink: 0 !important;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .movie-polular-title {
+        padding-left: 0 !important;
+        font-size: 15px !important;
+    }
+
+    .movie-polular-item:hover{
+        transform: scale(1.05);
+    }
+
+    .movie-polular-item-detail{
+        display: none !important;
+    }
+
+    .icon-angle-right{
+        font-size: 26px !important;
+        right: 0 !important;
+    }
+
+    .icon-angle-left{
+        font-size: 26px !important;
+        left: 0 !important;
+    }
+
+     /* header */
+
+     .header-sidebar{
+        display: block !important;
+     }
+
+     .bar-icon{
+        display: block !important;
+     }
+
+     .genres-mobile{
+        display: flex !important;
+     }
+     
+     .header-container{
+        height: 44px !important;
+        padding: 0 15px !important;
+        background-color: rgb(17, 19, 25) !important;
+     }
+
+     .header-genres,
+     .header-account, 
+     .header-language, 
+     .header-history ,
+     .header-left-container .header-home{
+         display: none !important;
+     }
+ 
+     .header-search {
+        height: 28px !important;
+        border: none;
+        width: 100% !important;
+     }
+ 
+     .header-search-input{
+         width: 100% !important;
+     }
+
+     .header-logo .film-icon{
+        display: none !important;
+     }
+}
+

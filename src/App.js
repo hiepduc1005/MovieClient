@@ -1,4 +1,5 @@
 import './App.css';
+import './responsive.css'
 import {Routes , Route,  useLocation} from "react-router-dom"
 import Layout from './Layout';
 import Header from './components/header/Header';

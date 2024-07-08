@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Homepage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faAngleLeft, faAngleRight, faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons'
 import { getActionMovies, getAnimeMovies, getComedyMovies, getDramaMovies } from '../../api/MovieApi'
 import { useNavigate } from 'react-router-dom'
 import { addMovieToWatchList, checkMovieInWatchList } from '../../api/WatchListApi'
@@ -118,7 +118,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
 
     useEffect(()=>{
         if(top10Movies){
-            setMoviesArray([top10Movies,animeMovies,actionMovies,dramaMovies,comedyMovies])
+            setMoviesArray([top10Movies,top10Movies,top10Movies,dramaMovies,comedyMovies])
 
         }
     },[top10Movies,animeMovies,actionMovies,comedyMovies,dramaMovies])
@@ -131,7 +131,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
         const reFreshSlider = () => {
             let items = document.querySelectorAll('.movie-slider .movie-slider-list .movie-slider-item');
             if (items.length > 0) {
-                let checkLeft = items[active].offsetLeft;
+                let checkLeft = items[active]?.offsetLeft;
                 document.querySelector('.movie-slider .movie-slider-list').style.left = -checkLeft + 'px';
             }
 
@@ -178,6 +178,73 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
         navigate(path)
     } 
 
+    const sliderRefs = useRef([]);
+    if (sliderRefs.current.length !== moviesArray.length) {
+        sliderRefs.current = Array(moviesArray.length).fill().map((_, i) => sliderRefs.current[i] || React.createRef());
+    }
+
+    
+    const [movieSliderPopularIndex,setMovieSliderPopularIndex] = useState();
+
+    useEffect(() => {
+        if (moviesArray.length > 0) {
+            setMovieSliderPopularIndex(new Array(moviesArray.length).fill(0));
+        }
+    }, [moviesArray]);
+
+    const [popularListWitdth,setPopularListWidth] = useState()
+    const [popularItemWidth,setPopularItemWidth] = useState()
+    const [popularItemMarginRight,setPopularItemMarginRight] = useState()
+
+    useEffect(() => {
+        if(document.querySelector('#popular-list')){
+            setPopularListWidth(document.querySelector('#popular-list').offsetWidth)
+        }
+
+        if(document.querySelector("#movie-polular-item")){
+            const element = document.querySelector("#movie-polular-item")
+            setPopularItemWidth(element.offsetWidth)
+            setPopularItemMarginRight(getComputedStyle(element).marginRight)
+        }
+    },[document.querySelector('#popular-list'),document.querySelector("#movie-polular-item")])
+
+    
+
+    const handleOnClickArrowRight = (index) => {
+        setMovieSliderPopularIndex(prevState => {
+            const newState = [...prevState];
+            newState[index]++; 
+            const checkLeft = (popularItemWidth + parseInt(popularItemMarginRight)) * newState[index];
+            sliderRefs.current[index].current.style.transform = `translateX(${-checkLeft}px)`;
+            return newState;
+        });
+    };
+
+    const handleOnClickArrowLeft = (index) => {
+        setMovieSliderPopularIndex(prevState => {
+            const newState = [...prevState]
+            newState[index]--;
+            const checkLeft = (popularItemWidth + parseInt(popularItemMarginRight)) * newState[index];
+            sliderRefs.current[index].current.style.transform = `translateX(${-checkLeft}px)`;
+            return newState;
+        });
+    };
+        // console.log(document.querySelector('#popular-list'));
+    
+
+    const checkShowArrowRight = (movieLength) => {
+        if(popularListWitdth){
+            return (popularItemWidth + parseInt(popularItemMarginRight)) * movieLength > popularListWitdth ? true : false
+        }
+    }
+
+    const checkIfHaveItemToShowArrowRight = (movieLength) => {
+        const itemLength = (popularItemWidth + parseInt(popularItemMarginRight) )
+        if(popularListWitdth){
+            return Math.round(((itemLength * movieLength) - popularListWitdth) / itemLength)
+        }
+    }
+
   return (  
     <div className='homepage-container'>      
         <div className="movie-slider">
@@ -189,7 +256,6 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                     </div>
                 );
             })} 
-
             
            </div>
 
@@ -212,16 +278,16 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
 
         </div> 
             <div className='movie-slider-details'>
-                <div className='movie-slider-title' onClick={()=> handleNavigate(`/album/${top5Movies[active].slug}`)}>{top5Movies ? top5Movies[active].title : ''}</div>
+                <div className='movie-slider-title' onClick={()=> handleNavigate(`/album/${top5Movies[active]?.slug}`)}>{top5Movies ? top5Movies[active]?.title : ''}</div>
                 <div className='extra-details'>
                     <div className='movie-slider-rate'>
                         <FontAwesomeIcon className='star-icon' icon={faStar}></FontAwesomeIcon>
-                        {top5Movies ? top5Movies[active].rating : ''}</div>
-                    <div className='movie-slider-date'>{top5Movies ? top5Movies[active].releaseDate : ''}</div>
-                    <div className='movie-slider-duration'>{top5Movies ? top5Movies[active].duration : ''}m</div>
+                        {top5Movies ? top5Movies[active]?.rating : ''}</div>
+                    <div className='movie-slider-date'>{top5Movies ? top5Movies[active]?.releaseDate : ''}</div>
+                    <div className='movie-slider-duration'>{top5Movies ? top5Movies[active]?.duration : ''}m</div>
                 </div>
                 <div className='movie-slider-genres'>
-                    {top5Movies && top5Movies[active].genres.map((item,index) => { 
+                    {top5Movies && top5Movies[active]?.genres?.map((item,index) => { 
                         return (
                             <div key={index+"genreSlider"} className='item' onClick={() => handleNavigateMoviesGenre(item)}>{item}</div>
                         )
@@ -229,11 +295,11 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                     
                 </div>
                 <div className='movie-slider-des'>
-                {top5Movies ? top5Movies[active].description : ''}
+                {top5Movies ? top5Movies[active]?.description : ''}
                 </div>
                 <div className='movie-slider-button'>
                     <div className='movie-slider-playbutton' onClick={()=> handleNavigate(`/play/${top5Movies[active].episodes[0].slug}`)}>
-                        <FontAwesomeIcon size='3x' icon={faPlayCircle}></FontAwesomeIcon>
+                        <FontAwesomeIcon className='icon-play' icon={faPlayCircle}></FontAwesomeIcon>
                     </div>
 
                     <div className='movie-slider-watchlater' onClick={()=> handelAddMovieToWatchLater(user?.watchList?.id,top5Movies[active].id)}>
@@ -243,7 +309,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
 
                     :
 
-                    <svg className='watchlater-icon' xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18V5H7v13l5-2.18zm0-15a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 4h2v2h2v2h-2v2h-2v-2H9V9h2z"/></svg>       
+                    <svg className='watchlater-icon' xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path width='12px' height='12px' fill="currentColor" d="M17 18V5H7v13l5-2.18zm0-15a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 4h2v2h2v2h-2v2h-2v-2H9V9h2z"/></svg>       
                     }
                     </div>
                 </div>
@@ -252,55 +318,73 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
         <div className='movie-polular-list-container' id='myDiv1'>
             {moviesArray && moviesArray?.map((movies,index) => {
                 return(
-                <>
+                <div className='polular-list-wraper' >
                     <h2 onClick={() => handleNavigateMoviesGenre(movieTitle[index])} className='movie-polular-title'>{movieTitle[index]}</h2>
-                    <div className='movie-polular-list'>
-                        {movies && movies?.map((movie,index) => {
-                            return(
-                        <div className='movie-polular-item' key={`movie-polular-item${movie?.imdbId}${index}`}>            
-                            <div className='movie-polular-item-image'>
-                            <img alt='' src={movie.postUrl}>
-                                
-                            </img>
-                            <div className='movie-polular-item-rate'>
-                                    <FontAwesomeIcon className='icon' size='2xs' icon={faStar}></FontAwesomeIcon>
-                                    {movie.rating}
-                                </div>
-                            </div>           
-                                                            
-                            <div className='movie-polular-item-title'>{movie.title}</div>   
-                            
-                            <div className='movie-polular-item-detail'>
-                            <div className='details-image-container'>
-                                <img alt='' src={movie.backDropUrl}></img>
-                            </div>
-                            <div className='details-info'>
-                                <div className='details-info-title' onClick={()=> handleNavigate(`/album/${movie.slug}`)}>{movie.title}</div>
-                                <div className='extra-details-info'>
-                                    <div className='rate'>
-                                        <FontAwesomeIcon size='xs' icon={faStar}></FontAwesomeIcon>
-                                        {movie.rating}
+                    <div className='movie-polular-list' id='popular-list'>
+                        <div className='slider-move' ref={sliderRefs.current[index]}>
+                            {movies && movies?.map((movie,index) => {
+                                return(
+                            <div className='movie-polular-item' id='movie-polular-item' key={`movie-polular-item${movie?.imdbId}${index}`}>            
+                                <div className='movie-polular-item-image'>
+                                <img alt='' src={movie?.postUrl}>
+                                    
+                                </img>
+                                <div className='movie-polular-item-rate'>
+                                        <FontAwesomeIcon className='icon' size='2xs' icon={faStar}></FontAwesomeIcon>
+                                        {movie?.rating}
                                     </div>
-                                    <div className='date'>{movie.releaseDate}</div>
-                                    <div className='duration'>{movie.duration}</div>
+                                </div>           
+                                                                
+                                <div className='movie-polular-item-title'>{movie?.title}</div>   
+                                
+                                <div className='movie-polular-item-detail'>
+                                <div className='details-image-container'>
+                                    <img alt='' src={movie?.backDropUrl}></img>
                                 </div>
-                                <div className='details-info-genres'>
-                                    {movie?.genres && movie?.genres.map((genre,index) => {
-                                        return(
-                                            <div key={`details-info-genres${index}`} className='item' onClick={() => handleNavigateMoviesGenre(genre)}>{genre}</div>
-                                        )
-                                    })}
+                                <div className='details-info'>
+                                    <div className='details-info-title' onClick={()=> handleNavigate(`/album/${movie.slug}`)}>{movie?.title}</div>
+                                    <div className='extra-details-info'>
+                                        <div className='rate'>
+                                            <FontAwesomeIcon size='xs' icon={faStar}></FontAwesomeIcon>
+                                            {movie?.rating}
+                                        </div>
+                                        <div className='date'>{movie?.releaseDate}</div>
+                                        <div className='duration'>{movie?.duration}</div>
+                                    </div>
+                                    <div className='details-info-genres'>
+                                        {movie?.genres && movie?.genres?.map((genre,index) => {
+                                            return(
+                                                <div key={`details-info-genres${index}`} className='item' onClick={() => handleNavigateMoviesGenre(genre)}>{genre}</div>
+                                                )
+                                            })}
+                                    </div>
+                                    <div className='details-info-des'>{movie?.description}</div>
+                                    <div className='more-info'>more info <b>&gt;</b></div>
+                                            
                                 </div>
-                                <div className='details-info-des'>{movie.description}</div>
-                                <div className='more-info'>more info <b>&gt;</b></div>
-                            </div>
-                            </div>   
-                    </div>
-                            )
-                        })}
+                                </div>   
+                        </div>
+                                )
+                            })}
+                        </div>
                     
-                    </div>     
-                </>
+                    </div>   
+                    {
+                    (checkShowArrowRight(movies?.length) && (movieSliderPopularIndex && movieSliderPopularIndex[index] < checkIfHaveItemToShowArrowRight(movies?.length)))
+                        ? 
+                    <FontAwesomeIcon onClick={() => handleOnClickArrowRight(index)} className='icon-angle-right' icon={faAngleRight}></FontAwesomeIcon>
+                        :
+                        ''
+                    } 
+
+                    {
+                    (movieSliderPopularIndex && movieSliderPopularIndex[index] > 0) 
+                        ? 
+                        <FontAwesomeIcon onClick={() => handleOnClickArrowLeft(index)} className='icon-angle-left' icon={faAngleLeft}></FontAwesomeIcon>
+                        : ''
+                    }
+
+                </div>
                 )
             })}
         </div>

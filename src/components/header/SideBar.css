@@ -1,0 +1,76 @@
+.header-sidebar{
+    overflow: hidden;
+    margin-left: -15px;
+    position: fixed;
+    z-index: 1000;
+    width: 0;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease 0s;
+}
+
+.no-scroll{
+    overflow: hidden;
+}
+
+.show-sidebar{
+    width: 100vw !important;
+    opacity: 1;
+    display: block !important;
+}
+
+.show-sidebar .header-sidebar-container{
+    left: 0px !important;
+    overflow-y: scroll;
+}
+
+.header-sidebar-container{
+    position: relative;
+    width: 270px;
+    left: -270px;
+    height: 100%;
+    background-color: rgb(35, 37, 43);
+    transition:0.3s ease 0s;
+    padding-bottom: 8px;
+}
+
+.termofservice-sidebar-body-item,
+.help-sidebar-body-item,
+.about-sidebar-body-item{
+    height: 56px;
+    line-height: 56px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.termofservice-sidebar-body-item .icon,
+.help-sidebar-body-item .icon,
+.about-sidebar-body-item .icon{
+    margin: auto 0;
+}
+
+.termofservice-sidebar-content,
+.help-sidebar-content,
+.about-sidebar-content{
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease 0s;
+}
+
+.show-content-sidebar{
+    max-height: 1000px;
+    transition: all 1s ease 0s;
+}
+
+.termofservice-sidebar-content .item,
+.help-sidebar-content .item,
+.about-sidebar-content .item{
+    height: 56px;
+    line-height: 56px;
+    opacity: 0.8;
+    
+}

@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faClock, faFilm, faGlobe, faSearch, faSignOut, faUserAlt} from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect, useState } from 'react'
+import { faAngleRight, faAngleUp, faBars, faClock, faFilm, faGlobe, faSearch, faSignOut, faUserAlt} from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
 import Cookies from 'js-cookie'
+import SideBar from './SideBar'
 
 const Header = ({ user }) => {
     const [isHovered, setIsHovered] = useState(false)
@@ -11,9 +12,15 @@ const Header = ({ user }) => {
     const location = useLocation()
     const [moviesHistory, setMoviesHistory] = useState([])
     const [query,setQuery] = useState('')
+    const [showSideBar,setShowSideBar] = useState(false)
+    const headerRef = useRef(null)
 
     let currentPath = location.pathname
 
+    const handleClickSidebar = () => {
+        setShowSideBar(true)
+    }
+    
     const handleLogout = () => {
         Cookies.remove("token")
 
@@ -43,7 +50,7 @@ const Header = ({ user }) => {
     useEffect(() => {
         fetchMovieHistory()
         setQuery('')
-    }, [currentPath,user,fetchMovieHistory])
+    }, [currentPath,user])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -65,11 +72,12 @@ const Header = ({ user }) => {
     }, []);
 
     return (
-        <div className='header-container'>
+        <div className='header-container' ref={headerRef}>
             <div className='header-left-container'>
+                <FontAwesomeIcon onClick={() => handleClickSidebar()} className='bar-icon' icon={faBars}></FontAwesomeIcon>
                 <div className='header-logo' onClick={() => window.location.href='https://hmovie1005.netlify.app'}>
                     <div>
-                        <FontAwesomeIcon style={{ height: "30px" }} icon={faFilm} />
+                        <FontAwesomeIcon className='film-icon' style={{ height: "30px" }} icon={faFilm} />
                     </div>
                     <span className='header-logo-title'>HMovie</span>
                 </div>
@@ -120,7 +128,7 @@ const Header = ({ user }) => {
                                 : (
                                     moviesHistory?.map((movie) => {
                                         return (
-                                            <div className='history-box-item' key={`movieHistoryBox${movie.movieId}`} onClick={() => navigate(`/play/${movie.slug}-episode-${movie.episodeNumber}`)}>
+                                            <div className='history-box-item' key={`movieHistoryBox${movie.movieId}`} onClick={() => navigate(`/play/${movie.slug}`)}>
                                                 <div className='img-container'>
                                                     <img src={movie?.backDropUrl} alt={movie?.movieTitle}></img>
                                                 </div>
@@ -175,7 +183,7 @@ const Header = ({ user }) => {
                             <>
                                 <div className='account-box-header'>
                                     <div className='img-container'>
-                                        <img src={user?.avatarUrl} alt="User Avatar"></img>
+                                        <img src={ user?.avatarUrl} alt="User Avatar"></img>
                                     </div>
                                     <div className='username'>{user?.username}</div>
                                 </div>
@@ -238,6 +246,17 @@ const Header = ({ user }) => {
                     </div>
                 </div>
             </div>
+            <div className='genres-mobile'>
+                <a href='/drama' className='item'>Drama</a>
+                <a href='/action' className='item' >Action</a>
+                <a href='/anime' className='item'>Anime</a>
+                <a href='/comedy' className='item'>Comedy</a>
+                <a href='/romance' className='item'>Romance</a>
+            </div>
+            <SideBar user={user}
+                     showSideBar={showSideBar}
+                     setShowSideBar={setShowSideBar}
+            />        
         </div>
     )
 }
