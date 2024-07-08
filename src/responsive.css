@@ -118,6 +118,67 @@
         height: 50vw !important;
      }
 
+        /* movie play */
+
+        .movieplay-bottom,
+        .movieplay-top{
+           flex-direction: column !important;
+           padding: 0 16px !important;
+           height: 100% !important;
+           width: 100% !important;
+        }
+   
+        .movieplay-right-title {
+           display: none;
+        }
+   
+        .movieplay-right{
+           width: 100% !important;
+        }
+   
+        .extra-options {
+           background: rgb(35, 37, 43);
+        }
+   
+        .extra-options .comment span,
+        .extra-options .watchlater span,
+        .extra-options .share span{
+           display: none;
+        }
+   
+        .movieplay-bottom-left {
+           width: 100% !important;
+           font-size: 12px !important;
+        }
+        
+        .recommend-container .recomment-item{
+            flex-basis: calc(25% + 4.2223px) !important;
+        }
+   
+        .movieplay-bottom-right{
+           width: 100% !important;
+           margin-left: 0 !important;
+        }
+   
+        .show-bg-item{
+           padding-top: 0 !important;
+           padding-bottom: 0 !important;
+           background-color: transparent !important;
+       }
+   
+       .topten-movie-item img{
+           display: none !important;
+       }
+   
+       .movieplay-left iframe{
+           width: 100% !important;
+           height: 50vw !important;
+       }
+
+       .list-espisodes-container{
+        height: auto !important;
+     }
+
     
 }
 
@@ -319,5 +380,66 @@
         width: 100% !important;
         height: 50vw !important;
      }
+
+     /* movie play */
+
+     .movieplay-bottom,
+     .movieplay-top{
+        flex-direction: column !important;
+        padding: 0 16px !important;
+        height: 100% !important;
+        width: 100% !important;
+     }
+
+     .movieplay-right-title {
+        display: none;
+     }
+
+     .movieplay-right{
+        width: 100% !important;
+     }
+
+     .extra-options {
+        background: rgb(35, 37, 43);
+     }
+
+     .extra-options .comment span,
+     .extra-options .watchlater span,
+     .extra-options .share span{
+        display: none;
+     }
+
+     .list-espisodes-container{
+        height: auto !important;
+     }
+
+     .movieplay-bottom-left {
+        width: 100% !important;
+        font-size: 12px !important;
+     }
+     
+     .recommend-container .recomment-item{
+        flex-basis: calc(34.6667% + 3.2223px) !important;
+     }
+
+     .movieplay-bottom-right{
+        width: 100% !important;
+        margin-left: 0 !important;
+     }
+
+     .show-bg-item{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        background-color: transparent !important;
+    }
+
+    .topten-movie-item img{
+        display: none !important;
+    }
+
+    .movieplay-left iframe{
+        width: 100% !important;
+        height: 50vw !important;
+    }
 }
 
