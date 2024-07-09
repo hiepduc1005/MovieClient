@@ -142,7 +142,7 @@ const Movies = () => {
                 </div>
                 <div className='movie-slider-button'>
                     <div className='movie-slider-playbutton'>
-                        <FontAwesomeIcon size='3x' icon={faPlayCircle}></FontAwesomeIcon>
+                        <FontAwesomeIcon className='icon-play' size='3x' icon={faPlayCircle}></FontAwesomeIcon>
                     </div>
 
                     <div className='movie-slider-watchlater'>
@@ -157,12 +157,12 @@ const Movies = () => {
                 
         </div>
 
-        <div className='movie-polular-list-container' id='myDiv2'>
+        <div className='moviegenre-polular-list-container' id='myDiv2'>
                     <h2 className='movie-polular-title'>{genre?.charAt(0).toUpperCase() + genre?.slice(1)}</h2>
-                    <div className='movie-polular-list'>
+                    <div className='moviegenre-polular-list'>
                         {movies && movies?.map((movie) => {
                             return(
-                        <div key={`moviesgenre${movie.imdbId}`} className='movie-polular-item'>            
+                        <div key={`moviesgenre${movie.imdbId}`} className='moviegenre-polular-item'>            
                             <div className='movie-polular-item-image'>
                             <img alt='' src={movie?.postUrl}>
                                 

@@ -3,13 +3,10 @@
   --primary-color: rgb(28, 199, 73);
 }
 
-*:focus {
-  outline: none;
-}
-
+*:focus,
 *:active {
-  outline: none;
-  background-color: transparent;
+    outline: none; 
+    background-color: transparent;
 }
 
 @keyframes scaleImg{

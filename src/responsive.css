@@ -1,6 +1,12 @@
 @media (min-width: 1024px) and (max-width: 1272px){
+    /* homepage */
     .movie-polular-item {
         width: calc(16.66667% - 13px) !important;
+    }
+
+    /* movie genre */
+    .moviegenre-polular-item {
+        width: calc(17.97777%) !important;
     }
 
      /* header */
@@ -49,6 +55,16 @@
 
     .icon-play{
        font-size: 36px !important;
+    }
+
+    /* movie genre */
+    .moviegenre-polular-list{
+        padding: 0 !important;
+        margin-right: 40px;
+        margin-left: 40px;
+    }
+    .moviegenre-polular-item {
+        width: calc(25% - 16px) !important;
     }
 
     /* movie search */
@@ -210,6 +226,7 @@
         margin-top: 88px;
     }
 
+    .movies-container::before ,
     .homepage-container::before {
         padding-top: 22vw !important;
     }
@@ -300,6 +317,33 @@
     .icon-angle-left{
         font-size: 26px !important;
         left: 0 !important;
+    }
+
+    /* movie genre */
+    .moviegenre-polular-list-container{
+        width: 100% !important;
+        padding: 40px 15px !important;
+    }
+
+    .moviegenre-polular-list{
+        width: 100% !important;
+        padding:  0 !important;
+        margin-top: 10px !important;
+    }
+
+    .moviegenre-polular-item{
+        margin-right: 8px !important;
+        width: calc(33.3333% - 10px) !important;
+    }
+
+    .moviegenre-polular-item:hover{
+        cursor: pointer;
+        color: var(--primary-color) !important;
+        transform: scale(1.05);
+    }
+
+    .moviegenre-polular-item:hover .movie-polular-item-title{
+        color: var(--primary-color);
     }
 
     /* movie search */

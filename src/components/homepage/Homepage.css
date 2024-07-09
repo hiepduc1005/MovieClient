@@ -356,6 +356,7 @@
 .movie-polular-item-detail{
     position: absolute;
     width: 130%;
+    height: 120%;
     min-height: 330px;
     max-height: 400px;
     border-radius: 5px;

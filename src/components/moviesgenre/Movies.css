@@ -198,15 +198,36 @@
     fill-opacity:1; /* Thay đổi màu fill khi hover */
 }
 
+.moviegenre-polular-list-container{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.moviegenre-polular-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding: 0 60px;
+}
+
 
 .movie-polular-title:hover{
     color: var(--primary-color);
     cursor: pointer;
 }
 
- 
+ .moviegenre-polular-item{
+    width: calc(12.8%);
+    margin-right: 16px;
+    margin-bottom: 50px;
+    position: relative;
+    height: 100%;
+    transition: 0.3s;
+ }
 
-.movie-polular-item:last-child{
+.moviegenre-polular-item:last-child{
     margin-right: 0px;
 }   
 
@@ -217,7 +238,7 @@
     position: relative;
 }
 
-.movie-polular-item img{
+.moviegenre-polular-item img{
     width: 100%;
     object-fit: cover;
     border-radius: 5px;
@@ -250,6 +271,7 @@
 .movie-polular-item-detail{
     position: absolute;
     width: 130%;
+    height: 120%;
     min-height: 330px;
     max-height: 400px;
     border-radius: 5px;
@@ -359,7 +381,7 @@
     cursor: pointer;
 }
 
-.movie-polular-item:hover > .movie-polular-item-detail{
+.moviegenre-polular-item:hover > .movie-polular-item-detail{
     display: flex;
     opacity: 1;
 }
