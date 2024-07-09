@@ -39,6 +39,10 @@ const Footer = () => {
             </div>
 
         </div>
+        <div className='copy-right'>
+            <div className='item'>Copyright © 2024 Hmovie All Rights Reserved</div>
+            <div className='item'>We use cookies to improve your experience on this site. By continuing to use our website, you agree to our use of cookies. Learn more <a>Hmovie Privacy Policy</a></div>
+        </div>
     </footer>
   )
 }
