@@ -50,6 +50,26 @@ const Search = () => {
         }
     }, [query, currentPage])
 
+    const getDisplayedEpisodes = (episodes) => {
+        const totalEpisodes = episodes.length;
+        if (totalEpisodes <= 7) {
+          return episodes;
+        }
+        let windowWidth = window.innerWidth
+
+        if (windowWidth <= 740) {
+            const firstOne = episodes.slice(0, 1);
+            const lastFour = episodes.slice(-4);
+            return [...firstOne, '...', ...lastFour];
+          } else {
+            const firstThree = episodes.slice(0, 3);
+            const lastThree = episodes.slice(-3);
+            return [...firstThree, '...', ...lastThree];
+          }
+       
+        
+      };
+
     return (
         <div className='search-container'>
             <div className='search-title'>The following results are found based on your search “{query}”.</div>
@@ -64,8 +84,8 @@ const Search = () => {
                                 <div className='director'><span>Director:</span>Updating</div>
                                 <div className='cast'><span>Cast:</span>Updating</div>
                                 <div className='episode-container'>
-                                    {movie?.episodes?.map((episode, index) => (
-                                        <div key={`episode-search-item${episode?.id}`} className='episode-item'>{episode?.episodeNumber}</div>
+                                    {getDisplayedEpisodes(movie?.episodes)?.map((episode, index) => (
+                                            <div key={`episode-search-item${episode?.id}`} className='episode-item'>{episode?.episodeNumber ? episode?.episodeNumber : '...' }</div>                                        
                                     ))}
                                 </div>
                             </div>
