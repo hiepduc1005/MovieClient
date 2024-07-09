@@ -49,16 +49,16 @@ const SideBar = ({user,showSideBar,setShowSideBar}) => {
             <div className='account-sidebar-body'>
                 <div 
                     className={`account-sidebar-body-item`}
-                    onClick={() => {user ? navigate('/account') : navigator('/login')}}
+                    onClick={() => {user ? navigate('/account') : navigate('/login')}}
                 >My Account</div>
                 <div className='horizone-line margin-zero'></div>
                 <div 
                     className={`account-sidebar-body-item`}
-                    onClick={() => {user ? navigate('/account?s=history') : navigator('/login')}}
+                    onClick={() => {user ? navigate('/account?s=history') : navigate('/login')}}
                 >History</div>
                 <div
                     className={`account-sidebar-body-item`}
-                    onClick={() => {user ? navigate('/account?s=watchlater') : navigator('/login')}}
+                    onClick={() => {user ? navigate('/account?s=watchlater') : navigate('/login')}}
                 >WatchLater</div>
                 <div className='about-sidebar-body-item' onClick={(e) => handleClickAboutContent(e)}>
                     <div className='title'>About Hmovie</div>

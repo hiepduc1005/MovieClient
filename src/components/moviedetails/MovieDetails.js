@@ -44,7 +44,7 @@ const MovieDetails = ({user,token}) => {
       }
 
     }else{
-      window.location.href = 'http://localhost:3000/login'
+      window.location.href = 'https://hmovie1005.netlify.app/login'
     }
  }  
 

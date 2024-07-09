@@ -82,7 +82,7 @@ const Movies = () => {
     const handleNavigateMoviesGenre = (genre) => {
         if(genre !== "Popular on HMovie"){
            let pathName = genre.charAt(0).toLowerCase() + genre.slice(1)
-           window.location.href = `http://localhost:3000/${pathName}`
+           window.location.href = `https://hmovie1005.netlify.app/${pathName}`
         }
     }
 

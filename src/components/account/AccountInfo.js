@@ -20,7 +20,7 @@ const AccountInfo = ({user,token}) => {
 
     useEffect(() => {
         if(!user || !token){
-            window.location.href="http://localhost:3000"
+            window.location.href="https://hmovie1005.netlify.app"
         }
     })
 
@@ -179,7 +179,7 @@ const AccountInfo = ({user,token}) => {
                     <div className='movie-history'>
                         {user && user?.watchHistoryResponses?.map((movie) => {
                             return (
-                        <div className='movie-item' onClick={()=> window.location.href=`http://localhost:3000/play/${movie?.movieHistoryResponse?.slug}-episode-${movie?.episodeNumber}`}>
+                        <div className='movie-item' onClick={()=> window.location.href=`https://hmovie1005.netlify.app/play/${movie?.movieHistoryResponse?.slug}-episode-${movie?.episodeNumber}`}>
                             <div className='img'>
                                 <img alt='' src={movie?.movieHistoryResponse?.backDropUrl}></img>
                                 <div className='episode-number'>Watch to Episode {movie?.episodeNumber}</div>
