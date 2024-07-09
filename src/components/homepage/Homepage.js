@@ -118,7 +118,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
 
     useEffect(()=>{
         if(top10Movies){
-            setMoviesArray([top10Movies,top10Movies,top10Movies,dramaMovies,comedyMovies])
+            setMoviesArray([top10Movies,animeMovies,actionMovies,dramaMovies,comedyMovies])
 
         }
     },[top10Movies,animeMovies,actionMovies,comedyMovies,dramaMovies])
@@ -324,7 +324,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                         <div className='slider-move' ref={sliderRefs.current[index]}>
                             {movies && movies?.map((movie,index) => {
                                 return(
-                            <div className='movie-polular-item' id='movie-polular-item' key={`movie-polular-item${movie?.imdbId}${index}`}>            
+                            <div className='movie-polular-item' id='movie-polular-item' onClick={()=> handleNavigate(`/album/${movie.slug}`)} key={`movie-polular-item${movie?.imdbId}${index}`}>            
                                 <div className='movie-polular-item-image'>
                                 <img alt='' src={movie?.postUrl}>
                                     
