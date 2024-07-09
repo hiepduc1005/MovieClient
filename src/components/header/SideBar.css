@@ -9,8 +9,7 @@
     color: #fff;
     display: none;
     opacity: 0;
-    transition: all 0.3s ease 0s;
-}
+}   
 
 .no-scroll{
     overflow: hidden;
@@ -20,6 +19,7 @@
     width: 100vw !important;
     opacity: 1;
     display: block !important;
+
 }
 
 .show-sidebar .header-sidebar-container{
@@ -33,7 +33,7 @@
     left: -270px;
     height: 100%;
     background-color: rgb(35, 37, 43);
-    transition:0.3s ease 0s;
+    transition: left 0.3s ease 0s;
     padding-bottom: 8px;
 }
 

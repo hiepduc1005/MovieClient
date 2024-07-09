@@ -51,6 +51,14 @@
        font-size: 36px !important;
     }
 
+    /* movie search */
+
+    .pagination-container,
+    .movie-search-list{
+        width: 668px;
+        margin: 0 auto;
+    }
+
     
     
 
@@ -66,6 +74,21 @@
 
     .header-search-input{
         width: 138px;
+    }
+
+    .header-account img {
+        width: 22px !important;
+    }
+
+    .header-account,
+    .header-language,
+    .header-history {
+        margin: 0px 6px !important;
+    }
+
+    /* account */
+    .account-sidebar{
+        display: none;
     }
 
      /* movie details */
@@ -279,6 +302,17 @@
         left: 0 !important;
     }
 
+    /* movie search */
+    .movie-search-list .item{
+        margin: 0px 15px 30px !important;
+    }
+
+    .movie-search-list .item img {
+        width: 91px !important;
+        height: 160px !important;
+        
+    }
+
      /* header */
 
      .header-sidebar{
@@ -320,6 +354,37 @@
      .header-logo .film-icon{
         display: none !important;
      }
+
+     /* account */
+    .account-sidebar{
+        display: none;
+    }
+
+    .account-content-container{
+        padding: 0 15px !important;
+    }
+
+    .my-account-content .title {
+        font-size: 20px !important  ;
+    }
+
+     
+    .profile-other-info {
+        font-size: 13px !important;
+        flex-direction: column;
+    }
+
+    .profile-safe .account-security-item{
+        font-size: 13px !important;
+    }
+
+    .profile-other-info .created-date{
+        margin-bottom: 8px;
+    }
+
+    .account-info-container{
+        padding-top: 20px !important;
+    }
 
      /* movie details */
      .movie-details-container{

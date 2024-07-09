@@ -268,7 +268,11 @@
 .header-account-icon,
 .header-language-icon,
 .header-history-icon{
-    font-size: 18px;
+    font-size: 20px;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-account,

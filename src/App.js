@@ -26,8 +26,10 @@ function App() {
 
   useEffect(() => {
     const tokenFromCookies = Cookies.get("token");
+    
     if (tokenFromCookies) {
       setToken(tokenFromCookies);
+      console.log(tokenFromCookies)
     }
   }, []);
 
@@ -38,7 +40,7 @@ function App() {
     if (encodedToken) {
       try {
         const decodedToken = decodeURIComponent(atob(encodedToken));
-        setCookie('token', decodedToken, { path: '/', secure: true, sameSite: 'none', maxAge: 86400 * 30 });
+        setCookie('token', decodedToken, { path: '/', secure: true, sameSite: 'none', maxAge: 86400 * 30 ,httpOnly:false});
         searchParams.delete('t');
         const newUrl = `${location.pathname}${searchParams.toString() ? `? ${searchParams.toString()}` : ''}`;
         window.history.replaceState({}, document.title, newUrl); 
