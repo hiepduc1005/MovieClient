@@ -107,6 +107,33 @@
         display: none;
     }
 
+    .movie-watchlater .movie-item,
+    .movie-history .movie-item {
+        width: 31% !important;
+    }
+
+    .account-content-container{
+        padding: 0 50px !important;
+    }
+
+    .movie-watchlater{
+        width: 100% !important;
+    }
+
+    
+
+    .history-content {
+        padding: 0 !important;
+    }
+
+    .edit-btn-container .delete,
+    .edit-btn-container .cancle,
+    .watchlist-content .edit-btn {
+        height: 32px !important;
+        width: 88px !important;
+        font-size: 14px !important;
+     }
+
      /* movie details */
      .movie-details-container{
         margin: 0 15px !important;
@@ -319,6 +346,16 @@
         left: 0 !important;
     }
 
+    .movie-polular-item:hover{
+        cursor: pointer;
+        color: var(--primary-color) !important;
+        transform: scale(1.05);
+    }
+
+    .movie-polular-item:hover .movie-polular-item-title{
+        color: var(--primary-color);
+    }
+
     /* movie genre */
     .moviegenre-polular-list-container{
         width: 100% !important;
@@ -443,6 +480,33 @@
     .account-info-container{
         padding-top: 20px !important;
     }
+
+    .movie-watchlater .movie-item,
+    .movie-history .movie-item {
+        width: 48% !important;
+    }
+
+    .movie-history .movie-title{
+        font-size: 13px !important;
+    }
+    
+    .movie-item .img .episode-number{
+        font-size: 10px !important;
+    }
+
+    .watchlist-content .title,
+    .history-content .title,
+    .my-account-content .title{
+        font-size: 20px !important;
+    }
+
+    .edit-btn-container .delete,
+    .edit-btn-container .cancle,
+    .watchlist-content .edit-btn{
+        height: 30px !important;
+        width: 72px !important;
+        font-size: 14px !important;
+    } 
 
      /* movie details */
      .movie-details-container{

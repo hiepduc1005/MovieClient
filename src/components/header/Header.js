@@ -20,7 +20,7 @@ const Header = ({ user }) => {
     const handleClickSidebar = () => {
         setShowSideBar(true)
     }
-    
+
     const handleLogout = () => {
         Cookies.remove("token")
 
@@ -256,6 +256,7 @@ const Header = ({ user }) => {
             <SideBar user={user}
                      showSideBar={showSideBar}
                      setShowSideBar={setShowSideBar}
+                     handleLogout ={handleLogout}
             />        
         </div>
     )

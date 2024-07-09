@@ -374,6 +374,7 @@
 }
 
 .history-box-footer-unauth{
+    width: 100%;
     font-size: 14px;
     height: 40px;
     display: flex;

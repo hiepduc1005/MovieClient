@@ -4,6 +4,7 @@ import { faCheckCircle, faPlayCircle} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addMovieToWatchList, getAuthenticatedUserWatchList } from '../../api/WatchListApi';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 const AccountInfo = ({user,token}) => {
     const [isAccountSeleted, setAccountSeleted] = useState(true)
@@ -17,12 +18,14 @@ const AccountInfo = ({user,token}) => {
     const [listMovieWatchList,setListMovieWatchList] = useState([])
 
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams();
+    const setting = searchParams.get('s');
 
     useEffect(() => {
-        if(!user || !token){
+        if(setting !== 'history' && (!user || !token)){
             window.location.href="https://hmovie1005.netlify.app"
         }
-    })
+    },[token,user])
 
     const handleAccountClick = () => {
         setAccountSeleted(true)
@@ -94,6 +97,31 @@ const AccountInfo = ({user,token}) => {
         else setIsSelectAll(false)
 
     },[watchListDeleteSelected,listMovieWatchList?.movieResponses?.length])
+
+    const [moviesHistory,setMoviesHistory] = useState([])
+
+    const getMovieHistoryFromLocalStorage = () => {
+        let watchHistoryJson = localStorage.getItem("watchHistory");
+        let watchHistory = watchHistoryJson ? JSON.parse(watchHistoryJson) : []
+        setMoviesHistory(Array.isArray(watchHistory) ? watchHistory : [])
+    }
+
+    useEffect(() => {
+        getMovieHistoryFromLocalStorage()
+        if(setting === 'history'){
+            setHistorySeleted(true)
+            setAccountSeleted(false)        
+            setWatchLaterSeleted(false)
+        }else if(setting === 'watchlater'){
+            setWatchLaterSeleted(true)
+            setAccountSeleted(false)
+            setHistorySeleted(false)
+        }else{
+            setWatchLaterSeleted(false)
+            setAccountSeleted(true)
+            setHistorySeleted(false)
+        }
+    },[setting])
 
     return (
         <div className='account-info-container'>
@@ -177,7 +205,7 @@ const AccountInfo = ({user,token}) => {
                     <div className='title'>History</div>
                     <div className='horizone-line'></div>
                     <div className='movie-history'>
-                        {user && user?.watchHistoryResponses?.map((movie) => {
+                        {user ? user?.watchHistoryResponses?.map((movie) => {
                             return (
                         <div className='movie-item' onClick={()=> window.location.href=`https://hmovie1005.netlify.app/play/${movie?.movieHistoryResponse?.slug}-episode-${movie?.episodeNumber}`}>
                             <div className='img'>
@@ -188,7 +216,30 @@ const AccountInfo = ({user,token}) => {
                             <div className='movie-title'>{movie?.movieHistoryResponse?.title}</div>
                         </div>
                             )
-                        })} 
+                        }) 
+                            :
+                        
+                            moviesHistory?.map((movie) => {
+                                return (
+                            <div className='movie-item' onClick={()=> window.location.href=`https://hmovie1005.netlify.app/play/${movie?.slug}-episode-${movie?.episodeNumber}`}>
+                                <div className='img'>
+                                    <img alt='' src={movie?.backDropUrl}></img>
+                                    <div className='episode-number'>Watch to Episode {movie?.episodeNumber}</div>
+                                    <FontAwesomeIcon className='play-icon' icon={faPlayCircle}></FontAwesomeIcon>
+                                </div>
+                                <div className='movie-title'>{movie?.movieTitle}</div>
+                            </div>
+                            )})
+                        }
+
+                        {(moviesHistory?.length >= 4 && !user)
+                            ?
+                            <div className='history-box-footer-unauth'>
+                                <span className='title'>Sign in to store a more extensive movie watch history.</span>
+                            </div>
+                            : ''
+                        } 
+
                     </div>
                 </div>
 

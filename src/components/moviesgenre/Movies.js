@@ -162,7 +162,7 @@ const Movies = () => {
                     <div className='moviegenre-polular-list'>
                         {movies && movies?.map((movie) => {
                             return(
-                        <div key={`moviesgenre${movie.imdbId}`} className='moviegenre-polular-item'>            
+                        <div key={`moviesgenre${movie.imdbId}`} className='moviegenre-polular-item' onClick={() => {navigate(`/album/${movie.slug}`)}}>            
                             <div className='movie-polular-item-image'>
                             <img alt='' src={movie?.postUrl}>
                                 
@@ -180,7 +180,7 @@ const Movies = () => {
                                 <img alt='' src={movie?.backDropUrl}></img>
                             </div>
                             <div className='details-info'>
-                                <div className='details-info-title' onClick={() => {navigate(`/album/${movie.slug}`);console.log(movie.slug)}}>{movie.title}</div>
+                                <div className='details-info-title' onClick={() => {navigate(`/album/${movie.slug}`)}}>{movie.title}</div>
                                 <div className='extra-details-info'>
                                     <div className='rate'>
                                         <FontAwesomeIcon size='xs' icon={faStar}></FontAwesomeIcon>

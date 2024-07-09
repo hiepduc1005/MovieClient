@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router'
 import userDefault from '../../assert/img/user.png'
 
-const SideBar = ({user,showSideBar,setShowSideBar}) => {
+const SideBar = ({user,showSideBar,setShowSideBar,handleLogout}) => {
     const navigate = useNavigate()
     const sideBarRef = useRef(null)
     const menuSideBarRef = useRef(null)
@@ -41,7 +41,7 @@ const SideBar = ({user,showSideBar,setShowSideBar}) => {
     <div ref={sideBarRef} className={`header-sidebar ${showSideBar ? 'show-sidebar' : ''}`} onClick={() => setShowSideBar(false)}>
         <div className='header-sidebar-container' ref={menuSideBarRef}>
             <div className='account-sidebar-header'>
-                <div    className='avatar'>
+                <div className='avatar'>
                     <img alt='' src={user?.avatarUrl ? user?.avatarUrl : userDefault}></img>
                 </div>
                 <div className='username'>{user ? user?.username : 'Login/SignUp'}</div>
@@ -54,7 +54,7 @@ const SideBar = ({user,showSideBar,setShowSideBar}) => {
                 <div className='horizone-line margin-zero'></div>
                 <div 
                     className={`account-sidebar-body-item`}
-                    onClick={() => {user ? navigate('/account?s=history') : navigate('/login')}}
+                    onClick={() => {navigate('/account?s=history')}}
                 >History</div>
                 <div
                     className={`account-sidebar-body-item`}
@@ -108,7 +108,7 @@ const SideBar = ({user,showSideBar,setShowSideBar}) => {
                 <div className='horizone-line margin-zero'></div>
                         
             </div>
-            <div className='account-sidebar-bottom'>
+            <div className='account-sidebar-bottom' onClick={() => handleLogout()}>
                 <div className='account-sidebar-body-item'>Logout</div>
             </div>
         </div>
