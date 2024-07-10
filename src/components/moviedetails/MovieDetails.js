@@ -87,6 +87,7 @@ const MovieDetails = ({user,token}) => {
       const movieData = await getMovieBySlug(slug)
       if(movieData){
         setMovie(movieData.data)
+        document.title = movie.title
       }
     }catch(err){
       console.log(err)

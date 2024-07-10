@@ -28,6 +28,7 @@ const MoviePlay = ({top10Movies,token,user}) => {
       const episodeData = await getMovieEpisodeBySlug(slug);
       if(episodeData){
         setEpisode(episodeData.data)
+        document.title = episode.movie.title + " Episode " + episode.episode.episodeNumber  
       }
     }catch(err){
       console.log(err)

@@ -14,6 +14,12 @@ const ModalAuth = () => {
         window.location.href = 'https://movie-server-v2.onrender.com/oauth2/authorization/google';
 
     };
+
+    const handleLoginFacebook = () => {
+      window.location.href = 'https://movie-server-v2.onrender.com/oauth2/authorization/facebook';
+
+  };
+  
     
     useEffect(() => {
       if(token){
@@ -47,7 +53,7 @@ const ModalAuth = () => {
               Sign in with Google
             </button>
 
-            <button className='btn-facebook' type="button">
+            <button onClick={() => handleLoginFacebook()} className='btn-facebook' type="button">
             <img alt='' className='icon-facebook' src={facebook}></img>
               Sign in with Facebook
             </button>

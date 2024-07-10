@@ -21,6 +21,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
     const [show,setShow] = useState(false)
     const [isInWatchList,setIsInWatchList] = useState()
 
+
     useEffect(() => {
         if (show) {
           const timer = setTimeout(() => {
@@ -298,7 +299,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
                 {top5Movies ? top5Movies[active]?.description : ''}
                 </div>
                 <div className='movie-slider-button'>
-                    <div className='movie-slider-playbutton' onClick={()=> handleNavigate(`/play/${top5Movies[active].episodes[0].slug}`)}>
+                    <div className='movie-slider-playbutton' onClick={()=> handleNavigate(`/play/${top5Movies[active]?.episodes[0].slug}`)}>
                         <FontAwesomeIcon className='icon-play' icon={faPlayCircle}></FontAwesomeIcon>
                     </div>
 
