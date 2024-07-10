@@ -36,9 +36,8 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
             try{
               
               const data = await addMovieToWatchList(watchlistId,movieId,token);
-        
-              const check =  handleCheckMovieInWatchList(watchlistId,movieId)
-              if(check && data){
+              setIsInWatchList(!isInWatchList)
+              if(data){
                 setShow(true)
               }
         
@@ -130,6 +129,7 @@ const Homepage = ({top5Movies,top10Movies,user,token}) => {
 
     useEffect(() => {
         const reFreshSlider = () => {
+            setShow(false)
             let items = document.querySelectorAll('.movie-slider .movie-slider-list .movie-slider-item');
             if (items.length > 0) {
                 let checkLeft = items[active]?.offsetLeft;

@@ -77,17 +77,18 @@ const AccountInfo = ({user,token}) => {
 
     useEffect(() => {
         handleGetWatchList()
-    },[handleGetWatchList])
+    },[])
 
     const handleClickDelete = async () => {
-        if(watchListDeleteSelected.length > 0){
-            for (const item of watchListDeleteSelected) {
+        const itemsToDelete = [...watchListDeleteSelected];
+                    await setWatchListDeleteSelected([]);
+        if (itemsToDelete.length > 0) {
+            for (const item of itemsToDelete) {
                 await addMovieToWatchList(listMovieWatchList.id, item, token);
             }
         }
-
-        setWatchListDeleteSelected([])
-        handleGetWatchList()
+    
+        handleGetWatchList();
     }
 
     useEffect(() => {
