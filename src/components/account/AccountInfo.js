@@ -22,8 +22,10 @@ const AccountInfo = ({user,token}) => {
     const setting = searchParams.get('s');
 
     useEffect(() => {
-        if(setting !== 'history' && (!user || !token)){
-            window.location.href="https://hmovie1005.netlify.app"
+        if(setting !== 'history'){
+            if(!user || !token){
+                window.location.href="https://hmovie1005.netlify.app"
+            }
         }
     },[token,user])
 
