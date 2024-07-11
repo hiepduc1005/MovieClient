@@ -13,6 +13,7 @@ const SideBar = ({user,showSideBar,setShowSideBar,handleLogout}) => {
     const [showHelp,setShowHelp] = useState(false)
     const [showPolicy,setShowPolicy] = useState(false)
 
+
     const handleClickAboutContent = (e) => {
         e.stopPropagation();
         setShowAbout(!showAbout)
@@ -40,7 +41,7 @@ const SideBar = ({user,showSideBar,setShowSideBar,handleLogout}) => {
   return (
     <div ref={sideBarRef} className={`header-sidebar ${showSideBar ? 'show-sidebar' : ''}`} onClick={() => setShowSideBar(false)}>
         <div className='header-sidebar-container' ref={menuSideBarRef}>
-            <div className='account-sidebar-header'>
+            <div className='account-sidebar-header' onClick={() => {user ? navigate('/account') : navigate('/login')}}>
                 <div className='avatar'>
                     <img alt='' src={user?.avatarUrl ? user?.avatarUrl : userDefault}></img>
                 </div>

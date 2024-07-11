@@ -117,7 +117,12 @@ const Header = ({ user }) => {
                         </FontAwesomeIcon>
                     </div>
                 </div>
-                <div className='header-history'>
+                <div className='header-history'  
+                                    onClick={() => {
+                                        if (user) {
+                                            window.location.href = 'https://hmovie1005.netlify.app/account?s=history';
+                                        }
+                                    }}>
                     <span className='header-history-title'>History</span>
                     <FontAwesomeIcon className="header-history-icon" icon={faClock} />
                     <div className='box history-box'>
@@ -188,6 +193,11 @@ const Header = ({ user }) => {
                                     <div className='username'>{user?.username}</div>
                                 </div>
                                 <div
+                                    onClick={() => {
+                                        if (user) {
+                                            window.location.href = 'https://hmovie1005.netlify.app/account?s=watchlater';
+                                        }
+                                    }}
                                     className='account-box-item-auth'
                                     onMouseLeave={() => setIsHovered(false)}
                                     onMouseEnter={() => setIsHovered(true)}>
